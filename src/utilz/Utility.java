@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Utility {
-    public static final String backgroundImage1 = "background.jpg";
-    public static final String backgroundImage2 = "background2.jpg";
-    public static final String battleship = "battleship.png";
-    public static final String explodeAni = "explosion.png";
+    public static final String backgroundImage1 = "background2.jpg";
+    public static final String backgroundImage2 = "background.jpg";
+    public static final String explodeAni = "explodes.png";
     public static final String stick = "stick.png";
-    public static final String stickRotate = "stickrotate.png";
+    public static final String monsterImage = "monster.png";
+    public static final String burnLeft = "burnleft.png";
     public static BufferedImage importImg(String Name){
         BufferedImage img = null;
         InputStream is = Utility.class.getResourceAsStream("/" + Name);

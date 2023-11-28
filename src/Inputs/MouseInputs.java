@@ -20,9 +20,13 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         int xPos = e.getX() / SQUARE_WIDTH, yPos = e.getY() / SQUARE_HEIGHT;
         if (e.getButton() == MouseEvent.BUTTON1) {
             player1.attackBattleShip(xPos, yPos);
+            player2.attackBattleShip(xPos,yPos);
         }
         else if (e.getButton() == MouseEvent.BUTTON3){
             player1.placedBattleShip(xPos, yPos);
+            player2.placedBattleShip(xPos, yPos);
+            player1.setPlaying(true);
+            player2.setPlaying(false);
         }
     }
 

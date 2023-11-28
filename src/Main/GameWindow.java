@@ -21,7 +21,7 @@ public class GameWindow {
         jframe.setVisible(true);
     }
     public void setWindowSize(){
-        Dimension dimension = new Dimension(SQUARE_WIDTH * NUMBER_OF_SQUARE, SQUARE_HEIGHT * NUMBER_OF_SQUARE);
+        Dimension dimension = new Dimension(SQUARE_WIDTH * NUMBER_OF_SQUARE + SQUARE_WIDTH / 2, SQUARE_HEIGHT * NUMBER_OF_SQUARE + SQUARE_HEIGHT / 2);
         jframe.setPreferredSize(dimension);
     }
 }

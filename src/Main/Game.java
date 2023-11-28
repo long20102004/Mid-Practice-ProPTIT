@@ -10,7 +10,7 @@ import utilz.Utility;
 public class Game implements Runnable{
     private Player player1;
     private Player player2;
-    private final int FPS = 120;
+    private final int FPS = 10;
     private final int UPS = 200;
     private GameWindow gameWindow1;
     private GameWindow gameWindow2;
