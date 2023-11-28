@@ -19,7 +19,6 @@ public class Player extends JPanel {
     public boolean isPlaying;
     public BufferedImage[][] explodeFrame = new BufferedImage[100][100];
     public BufferedImage monster;
-    // Thay đổi khi nhận được lệnh từ chuột hoặc bàn phím
     public boolean[][] isPlaced = new boolean[100][100]; // Kiểm tra xem vị trí đó đã được đặt tàu hay chưa
     public static boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem vị trí đã bị bắn hỏng hay chưa
     public int[][] HP = new int[100][100];
