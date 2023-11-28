@@ -21,9 +21,9 @@ public class Game implements Runnable{
 
     private void initClass() {
         player1 = new Player();
-        player1.setResource(Utility.backgroundImage1);
+        player1.initClass(Utility.backgroundImage1);
         player2 = new Player();
-        player2.setResource(Utility.backgroundImage2);
+        player2.initClass(Utility.backgroundImage2);
 
         // Tạo cửa sổ và đọc đầu vào từ bàn phím và chuột
         gameWindow1 = new GameWindow(player1, "PLAYER 1");
