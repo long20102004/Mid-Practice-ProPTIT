@@ -9,13 +9,15 @@ import static utilz.ConstantVariable.NUMBER_OF_SQUARE;
 
 public class Ship {
     private int size = 3;
-    private int height = 1;
-    private int width = 3;
+    private int height = 3;
+    private int width = 1;
+    private int HP;
     private Player player;
     private boolean isHorizontal = true;
 
     public Ship(Player player) {
         this.player = player;
+        HP = size;
     }
 
     public void setShip() {
@@ -43,10 +45,14 @@ public class Ship {
             System.out.println("Bắn xịt");
         } else {
             System.out.println("T đang bắn");
-            player.HP[x][y]--;
-            if (player.HP[x][y] <= 0) {
-                player.HP[x][y] = 0;
-                Player.isExploded[x][y] = true;
+            HP--;
+            if (HP <= 0) {
+                HP = 0;
+                for (int i=0; i<width; i++){
+                    for (int j=0; j<height; j++){
+                        Player.isExploded[x+i][y+j] = true;
+                    }
+                }
             }
         }
     }
@@ -60,7 +66,6 @@ public class Ship {
                     player.isPlaced[x + i][y + j] = true;
                 }
             }
-            player.HP[x][y] = 3;
         } else {
             System.out.println("Đ đặt được nữa");
         }
