@@ -15,8 +15,6 @@ public class ExtraMethods {
 
     public ExtraMethods(Player player) {
         this.player = player;
-        shipHeight = player.ship.getHeight();
-        shipWidth = player.ship.getWidth();
     }
 
     public void drawExplode(Graphics g, int i, int j) {

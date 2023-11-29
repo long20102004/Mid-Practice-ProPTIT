@@ -13,8 +13,10 @@ import java.awt.image.BufferedImage;
 import static utilz.ConstantVariable.*;
 
 public class Player extends JPanel {
+    private int typeShip = 0;
+    public boolean isHorizontal = true;
     public Map map = new Map(this);
-    public Ship ship = new Ship(this);
+    public ShipManager shipManager = new ShipManager(this);
     public ExtraMethods extraMethods = new ExtraMethods(this);
     public BufferedImage[][] gameMap;
     public BufferedImage stick;
@@ -29,7 +31,6 @@ public class Player extends JPanel {
 
     public void initClass(String mapName) {
         map.setMap(mapName);
-        ship.setShip();
         extraMethods.importExplodeAnimation();
         extraMethods.importFire();
     }
@@ -41,11 +42,19 @@ public class Player extends JPanel {
 
     public void render(Graphics g) {
         map.renderMap(g);
-        ship.renderShip(g);
+        shipManager.renderAllShip(g);
         extraMethods.renderExtraMethods(g);
     }
 
     public void setPlaying(boolean playing) {
         isPlaying = playing;
+    }
+
+    public int getTypeShip() {
+        return typeShip;
+    }
+
+    public void setTypeShip(int typeShip) {
+        this.typeShip = typeShip;
     }
 }

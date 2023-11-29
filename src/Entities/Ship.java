@@ -8,18 +8,32 @@ import static utilz.ConstantVariable.*;
 import static utilz.ConstantVariable.NUMBER_OF_SQUARE;
 
 public class Ship {
-    private int size = 3;
-    private int height = 3;
-    private int width = 1;
+    private int xStartPosition; // Lưu số ô hàng ngang mà tàu này đang nằm
+    private int xEndPosition;
+    private int yStartPosition;
+    private int yEndPosition;
+    private int size;
+    private int height;
+    private int width;
     private int HP;
     private Player player;
     private boolean isHorizontal = true;
 
-    public Ship(Player player) {
+    public Ship(Player player, int size, boolean isHorizontal) {
         this.player = player;
+        this.size = size;
         HP = size;
+        this.isHorizontal = isHorizontal;
+        if (isHorizontal){
+            width = size;
+            height = 1;
+        }
+        else{
+            height = size;
+            width = 1;
+        }
+        setShip();
     }
-
     public void setShip() {
         switch (size) {
             case 1:
@@ -40,7 +54,7 @@ public class Ship {
 
         }
     }
-    public void attackBattleShip(int x, int y) {
+    public void attack(int x, int y) {
         if (!player.isPlaced[x][y] || Player.isExploded[x][y]) {
             System.out.println("Bắn xịt");
         } else {
@@ -48,9 +62,9 @@ public class Ship {
             HP--;
             if (HP <= 0) {
                 HP = 0;
-                for (int i=0; i<width; i++){
-                    for (int j=0; j<height; j++){
-                        Player.isExploded[x+i][y+j] = true;
+                for (int i=xStartPosition; i<xEndPosition; i++){
+                    for (int j=yStartPosition; j<yEndPosition; j++){
+                        Player.isExploded[i][j] = true;
                     }
                 }
             }
@@ -60,12 +74,16 @@ public class Ship {
 
     public void placedBattleShip(int x, int y) {
         if (isAvailbleToPlace(x, y)) {
-            System.out.println("T đã đặt");
+            System.out.println("T đã đặt: "  + size);
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
                     player.isPlaced[x + i][y + j] = true;
                 }
             }
+            xStartPosition = x;
+            xEndPosition = x + width;
+            yStartPosition = y;
+            yEndPosition = y + height;
         } else {
             System.out.println("Đ đặt được nữa");
         }
@@ -113,14 +131,6 @@ public class Ship {
         }
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
     public int getHeight() {
         return height;
     }
@@ -140,5 +150,22 @@ public class Ship {
     public void setHorizontal(boolean horizontal) {
         isHorizontal = horizontal;
     }
+
+    public int getxStartPosition() {
+        return xStartPosition;
+    }
+
+    public int getxEndPosition() {
+        return xEndPosition;
+    }
+
+    public int getyStartPosition() {
+        return yStartPosition;
+    }
+
+    public int getyEndPosition() {
+        return yEndPosition;
+    }
+
 }
 

@@ -21,20 +21,20 @@ public class MouseInputs2 implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int xPos = e.getX() / SQUARE_WIDTH, yPos = e.getY() / SQUARE_HEIGHT;
-        player2.setPlaying(true);
-        player1.setPlaying(false);
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            player2.ship.attackBattleShip(xPos, yPos);
-            player1.ship.attackBattleShip(xPos, yPos);
-        } else if (e.getButton() == MouseEvent.BUTTON3) {
-            player2.ship.placedBattleShip(xPos, yPos);
-        }
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        int xPos = e.getX() / SQUARE_WIDTH, yPos = e.getY() / SQUARE_HEIGHT;
+        player2.setPlaying(true);
+        player1.setPlaying(false);
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            player1.shipManager.attackShip(xPos,yPos);
+            player2.shipManager.attackShip(xPos,yPos);
+        } else if (e.getButton() == MouseEvent.BUTTON3) {
+            player2.shipManager.addShip(player2.getTypeShip(),xPos,yPos,player2.isHorizontal);
+        }
     }
 
     @Override

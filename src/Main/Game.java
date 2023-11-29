@@ -12,7 +12,7 @@ import utilz.Utility;
 public class Game implements Runnable{
     private Player player1;
     private Player player2;
-    private final int FPS = 10;
+    private final int FPS = 6;
     private final int UPS = 200;
     private GameWindow gameWindow1;
     private GameWindow gameWindow2;
@@ -27,19 +27,16 @@ public class Game implements Runnable{
         player2 = new Player();
         player2.initClass(Utility.getRandomBackGround());
 
-        gameWindow1 = new GameWindow(player1, "PLAYER 1");
+        gameWindow1 = new GameWindow(player1, "PLAYER 1", new KeyInputs(player1));
         MouseInputs mouseInputs = new MouseInputs(player1, player2);
-        KeyInputs keyInputs = new KeyInputs(player1, player2);
         player1.addMouseListener(mouseInputs);
-        player1.addKeyListener(keyInputs);
+        gameWindow1.focus();
 
 
-
-        gameWindow2 = new GameWindow(player2, "PLAYER 2");
+        gameWindow2 = new GameWindow(player2, "PLAYER 2", new KeyInputs(player2));
         MouseInputs2 mouseInputs2 = new MouseInputs2(player1, player2);
-        KeyInputs2 keyInputs2 = new KeyInputs2(player1, player2);
         player2.addMouseListener(mouseInputs2);
-        player2.addKeyListener(keyInputs2);
+        gameWindow2.focus();
     }
 
     public void startGameLoop(){

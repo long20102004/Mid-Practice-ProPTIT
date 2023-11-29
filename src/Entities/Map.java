@@ -12,7 +12,6 @@ public class Map {
     public Map(Player player){
         this.player = player;
     }
-
     public void setMap(String pictureName) {
         player.gameMap = new BufferedImage[NUMBER_OF_SQUARE][NUMBER_OF_SQUARE];
         BufferedImage img = Utility.importImg(pictureName);
