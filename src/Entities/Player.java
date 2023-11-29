@@ -1,5 +1,8 @@
 package Entities;
 
+import GameState.GameState;
+import GameState.Menu;
+import GameState.Playing;
 import Main.GameWindow;
 import utilz.Utility;
 
@@ -18,11 +21,14 @@ public class Player extends JPanel {
     public boolean[][] explodedAnimation = new boolean[100][100];
     public boolean isPlaying;
     public BufferedImage[][] explodeFrame = new BufferedImage[100][100];
-    public BufferedImage monster;
+    public BufferedImage battleship;
+    public BufferedImage battleshipRotate;
     public boolean[][] isPlaced = new boolean[100][100]; // Kiểm tra xem vị trí đó đã được đặt tàu hay chưa
     public static boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem vị trí đã bị bắn hỏng hay chưa
     public int[][] HP = new int[100][100];
-    public void initClass(String mapName){
+
+
+    public void initClass(String mapName) {
         map.setMap(mapName);
         ship.setShip();
         extraMethods.importExplodeAnimation();
@@ -33,11 +39,13 @@ public class Player extends JPanel {
         super.paintComponent(g);
         render(g);
     }
+
     public void render(Graphics g) {
         map.renderMap(g);
         ship.renderShip(g);
         extraMethods.renderExtraMethods(g);
     }
+
     public void setPlaying(boolean playing) {
         isPlaying = playing;
     }

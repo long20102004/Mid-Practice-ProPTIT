@@ -1,8 +1,6 @@
 package utilz;
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,8 +17,14 @@ public class Utility {
     public static final String backgroundImage6 = "background6.jpg";
     public static final String backgroundImage7 = "background7.jpg";
     public static final String explodeAni = "explodes.png";
+    public static final String battleship1 = "battleship.png";
+    public static final String battleship2 = "battleshipsize2.png";
+    public static final String battleship2Rotate = "battleshipsize2 - Rotate.png";
+    public static final String battleship3 = "battleshipsize3.png";
+    public static final String battleship3Rotate = "battleshipsize3 - Rotate.png";
+    public static final String battleship4 = "battleshipsize4.png";
+    public static final String battleship4Rotate = "battleshipsize4 - Rotate.png";
     public static final String stick = "stick.png";
-    public static final String monsterImage = "monster.png";
     public static final String burnLeft = "burnleft.png";
     public static String getRandomBackGround(){
         arrayList.add(backgroundImage1);

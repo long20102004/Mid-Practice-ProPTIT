@@ -1,6 +1,8 @@
 package Main;
 
 import Entities.Player;
+import GameState.Menu;
+import GameState.Playing;
 import Inputs.KeyInputs;
 import Inputs.KeyInputs2;
 import Inputs.MouseInputs;
@@ -25,7 +27,6 @@ public class Game implements Runnable{
         player2 = new Player();
         player2.initClass(Utility.getRandomBackGround());
 
-        // Tạo cửa sổ và đọc đầu vào từ bàn phím và chuột
         gameWindow1 = new GameWindow(player1, "PLAYER 1");
         MouseInputs mouseInputs = new MouseInputs(player1, player2);
         KeyInputs keyInputs = new KeyInputs(player1, player2);
@@ -33,8 +34,7 @@ public class Game implements Runnable{
         player1.addKeyListener(keyInputs);
 
 
-        ;
-        // Tạo cửa sổ và đọc đầu vào từ bàn phím và chuột
+
         gameWindow2 = new GameWindow(player2, "PLAYER 2");
         MouseInputs2 mouseInputs2 = new MouseInputs2(player1, player2);
         KeyInputs2 keyInputs2 = new KeyInputs2(player1, player2);
@@ -47,6 +47,13 @@ public class Game implements Runnable{
         gameThread.start();
     }
 
+
+    public Player getPlayer1(){
+        return player1;
+    }
+    public Player getPlayer2(){
+        return player2;
+    }
     @Override
     public void run() {
         int frames = 0, updates = 0;

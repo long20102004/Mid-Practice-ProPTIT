@@ -1,6 +1,7 @@
 package Inputs;
 
 import Entities.Player;
+import GameState.GameState;
 import Main.GamePanel;
 
 import java.awt.event.MouseEvent;
@@ -12,7 +13,8 @@ import static utilz.ConstantVariable.SQUARE_WIDTH;
 
 public class MouseInputs2 implements MouseListener, MouseMotionListener {
     private Player player1, player2;
-    public MouseInputs2(Player player1, Player player2){
+
+    public MouseInputs2(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
     }
@@ -24,11 +26,9 @@ public class MouseInputs2 implements MouseListener, MouseMotionListener {
         player1.setPlaying(false);
         if (e.getButton() == MouseEvent.BUTTON1) {
             player2.ship.attackBattleShip(xPos, yPos);
-            player1.ship.attackBattleShip(xPos,yPos);
-        }
-        else if (e.getButton() == MouseEvent.BUTTON3){
+            player1.ship.attackBattleShip(xPos, yPos);
+        } else if (e.getButton() == MouseEvent.BUTTON3) {
             player2.ship.placedBattleShip(xPos, yPos);
-//            player1.ship.placedBattleShip(xPos,yPos);
         }
     }
 
