@@ -86,7 +86,8 @@ public class ExtraMethods {
     private int xSmoke, ySmoke;
 
     public void drawSmoke(Graphics g, int i, int j) {
-        if (Player.isFailedShot[i][j] && !player.explodedAnimation[i][j]) {
+        if (Player.isFailedShot[i][j]) {
+            System.out.println("Khói");
             if (xSmoke < 3 && ySmoke < 3) {
                 g.drawImage(player.smokeFrame[xSmoke][ySmoke], i*SQUARE_HEIGHT, j*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_HEIGHT * 170 / 250, null);
             }

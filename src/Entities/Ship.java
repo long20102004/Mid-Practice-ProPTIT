@@ -1,8 +1,5 @@
 package Entities;
 
-import GameState.GameState;
-import utilz.Utility;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -45,7 +42,6 @@ public class Ship {
     public void attack(int x, int y) {
         if (!isPlaced[x][y] || Player.isExploded[x][y]) {
             System.out.println("Bắn xịt");
-            Player.isFailedShot[x][y] = true;
         } else {
             System.out.println("T đang bắn");
             Player.isBroken[x][y] = true;
@@ -121,7 +117,7 @@ public class Ship {
     public void renderShip(Graphics g) {
         for (int i = 0; i < NUMBER_OF_SQUARE; i++) {
             for (int j = 0; j < NUMBER_OF_SQUARE; j++) {
-                if (player.isPlaying) drawShip(g, i, j);
+                drawShip(g, i, j);
             }
         }
     }

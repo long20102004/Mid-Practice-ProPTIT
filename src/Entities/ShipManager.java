@@ -1,6 +1,7 @@
 package Entities;
 
 import GameState.GameState;
+import Main.Game;
 import utilz.Utility;
 
 import java.awt.*;
@@ -9,8 +10,10 @@ import java.util.ArrayList;
 
 public class ShipManager {
     private Player player;
+    private PlayerManager playerManager;
 
-    public ShipManager(Player player) {
+    public ShipManager(PlayerManager playerManager, Player player) {
+        this.playerManager = playerManager;
         this.player = player;
     }
 
@@ -38,21 +41,22 @@ public class ShipManager {
             System.out.println("Chưa chọn loại tàu, chọn lại đi");
             return;
         }
-        if (shipsList.size() >= 5) {
+        if (shipsList.size() >= 5 || PlayerManager.countNumberPlayer >= 2) {
             System.out.println("Đã full tàu");
             return;
         }
-        player.screenWhenAddShip = true;
         System.out.println("Tàu này là loại: " + size);
         Ship newShip = new Ship(player, size, isHorizontal);
         newShip.placedBattleShip(x, y);
         if (newShip.placedDone) shipsList.add(newShip);
         resetShipStatus();
         if (shipsList.size() == 5) {
-            if (GameState.state == GameState.PLAYER1) GameState.state = GameState.PLAYER2;
-            else GameState.state = GameState.PLAYER1;
-            Player.countPlayerPlacedDone++;
-            if (Player.countPlayerPlacedDone >= 2) Player.screenWhenAddShip = false;
+            PlayerManager.countNumberPlayer++;
+            if (PlayerManager.countNumberPlayer >= 2){
+                playerManager.currentPlayer = playerManager.getPlayer1();
+                playerManager.switchStatus = true;
+            }
+            playerManager.updatePlayerState();
         }
     }
 

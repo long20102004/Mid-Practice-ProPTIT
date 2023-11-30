@@ -1,21 +1,19 @@
 package Inputs;
 
 import Entities.Player;
+import Entities.PlayerManager;
 import GameState.GameState;
-import Main.Game;
 
-import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import static utilz.ConstantVariable.SQUARE_HEIGHT;
-import static utilz.ConstantVariable.SQUARE_WIDTH;
-
 public class MouseInputs implements MouseListener, MouseMotionListener {
+    private PlayerManager playerManager;
     private Player player;
 
-    public MouseInputs(Player player) {
+    public MouseInputs(PlayerManager playerManager, Player player) {
+        this.playerManager = playerManager;
         this.player = player;
     }
 
@@ -26,10 +24,19 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (GameState.state == GameState.PLAYER1) {
-            player.player1State.mousePressed(e);
+        if (!playerManager.switchStatus) {
+            if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer1()) {
+                playerManager.playerState.mousePressed(e);
+            }
+            else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer2())
+                playerManager.playerState.mousePressed(e);
         }
-        else player.player2State.mousePressed(e);
+        else {
+            if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer2())
+                playerManager.playerState.mousePressed(e);
+            else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer1())
+                playerManager.playerState.mousePressed(e);
+        }
     }
 
     @Override
