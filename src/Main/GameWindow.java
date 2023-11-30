@@ -2,8 +2,6 @@ package Main;
 
 import Entities.Player;
 import Inputs.KeyInputs;
-import Inputs.KeyInputs2;
-import Inputs.MouseInputs;
 
 import javax.swing.*;
 import java.awt.*;

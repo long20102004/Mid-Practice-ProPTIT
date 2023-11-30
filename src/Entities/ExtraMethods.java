@@ -73,12 +73,46 @@ public class ExtraMethods {
         }
     }
 
+    // Hiệu ứng khói khi bắn xịt
+    public void importSmoke() {
+        BufferedImage img = Utility.importImg(Utility.smokeAni);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                player.smokeFrame[i][j] = img.getSubimage(j * 250, i * 170, 250, 170);
+            }
+        }
+    }
+
+    private int xSmoke, ySmoke;
+
+    public void drawSmoke(Graphics g, int i, int j) {
+        if (Player.isFailedShot[i][j] && !player.explodedAnimation[i][j]) {
+            if (xSmoke < 3 && ySmoke < 3) {
+                g.drawImage(player.smokeFrame[xSmoke][ySmoke], i*SQUARE_HEIGHT, j*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_HEIGHT * 170 / 250, null);
+            }
+            xSmoke++;
+            if (xSmoke >= 3) {
+                ySmoke++;
+                xSmoke = 0;
+            }
+            if (ySmoke >= 3) {
+                xSmoke = 0;
+                ySmoke = 0;
+            }
+        }
+    }
+
     public void renderExtraMethods(Graphics g) {
         for (int i = 0; i < NUMBER_OF_SQUARE; i++) {
             for (int j = 0; j < NUMBER_OF_SQUARE; j++) {
+                drawSmoke(g, i, j);
                 drawExplode(g, i, j);
                 drawFire(g, i, j);
             }
         }
     }
+
+
 }
+
+

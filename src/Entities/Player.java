@@ -1,16 +1,13 @@
 package Entities;
-
 import GameState.GameState;
-import GameState.Menu;
-import GameState.Playing;
-import Main.GameWindow;
-import utilz.Utility;
+import GameState.Player1State;
+import GameState.Player2State;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.ConstantVariable.*;
+
 
 public class Player extends JPanel {
     private int typeShip = 0;
@@ -23,16 +20,20 @@ public class Player extends JPanel {
     public boolean[][] explodedAnimation = new boolean[100][100];
     public boolean isPlaying;
     public BufferedImage[][] explodeFrame = new BufferedImage[100][100];
-    public BufferedImage battleship;
-    public BufferedImage battleshipRotate;
-    public boolean[][] isPlaced = new boolean[100][100]; // Kiểm tra xem vị trí đó đã được đặt tàu hay chưa
     public static boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem vị trí đã bị bắn hỏng hay chưa
-
-
+    public BufferedImage[][] smokeFrame = new BufferedImage[100][100];
+    public static boolean[][] isBroken = new boolean[100][100];
+    public static boolean[][] isFailedShot = new boolean[100][100];
+    public boolean[][] isDrawed = new boolean[100][100];
+    public Player1State player1State = new Player1State(this);
+    public Player2State player2State = new Player2State(this);
+    public static boolean screenWhenAddShip = true;
+    public static int countPlayerPlacedDone;
     public void initClass(String mapName) {
         map.setMap(mapName);
         extraMethods.importExplodeAnimation();
         extraMethods.importFire();
+        extraMethods.importSmoke();
     }
 
     public void paintComponent(Graphics g) {
@@ -41,10 +42,24 @@ public class Player extends JPanel {
     }
 
     public void render(Graphics g) {
-        map.renderMap(g);
-        shipManager.renderAllShip(g);
-        extraMethods.renderExtraMethods(g);
+        if (screenWhenAddShip){
+            if (isPlaying){
+                map.renderMap(g);
+                shipManager.renderAllShip(g);
+                extraMethods.renderExtraMethods(g);
+            }
+            else{
+                if (GameState.state == GameState.PLAYER1) player2State.draw(g);
+                else player1State.draw(g);
+            }
+        }
+        else {
+            map.renderMap(g);
+            if (isPlaying) shipManager.renderAllShip(g);
+            extraMethods.renderExtraMethods(g);
+        }
     }
+
 
     public void setPlaying(boolean playing) {
         isPlaying = playing;

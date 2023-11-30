@@ -2,6 +2,7 @@ package Inputs;
 
 import Entities.Player;
 import GameState.GameState;
+import Main.Game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,23 +21,8 @@ public class KeyInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_1:
-                player.setTypeShip(1);
-                break;
-            case KeyEvent.VK_2:
-                player.setTypeShip(2);
-                break;
-            case KeyEvent.VK_3:
-                player.setTypeShip(3);
-                break;
-            case KeyEvent.VK_4:
-                player.setTypeShip(4);
-                break;
-            case KeyEvent.VK_R:
-                player.isHorizontal = false;
-                break;
-        }
+        if (GameState.state == GameState.PLAYER1) player.player1State.keyPressed(e);
+        else player.player2State.keyPressed(e);
     }
 
     @Override

@@ -26,6 +26,9 @@ public class Utility {
     public static final String battleship4Rotate = "battleshipsize4 - Rotate.png";
     public static final String stick = "stick.png";
     public static final String burnLeft = "burnleft.png";
+    public static final String waitingBackground = "Waiting.png";
+    public static final String smokeAni = "smoke.png";
+    public static final String broken = "broken.png";
     public static String getRandomBackGround(){
         arrayList.add(backgroundImage1);
         arrayList.add(backgroundImage2);

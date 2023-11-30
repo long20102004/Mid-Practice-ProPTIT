@@ -1,8 +1,10 @@
 package Entities;
 
+import GameState.GameState;
 import utilz.Utility;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static utilz.ConstantVariable.*;
 import static utilz.ConstantVariable.NUMBER_OF_SQUARE;
@@ -18,6 +20,10 @@ public class Ship {
     private int HP;
     private Player player;
     private boolean isHorizontal = true;
+    public BufferedImage battleship;
+    public BufferedImage battleshipRotate;
+    public boolean[][] isPlaced = new boolean[100][100]; // Kiểm tra xem vị trí đó đã được đặt tàu hay chưa
+    public boolean placedDone;
 
     public Ship(Player player, int size, boolean isHorizontal) {
         this.player = player;
@@ -32,33 +38,17 @@ public class Ship {
             height = size;
             width = 1;
         }
-        setShip();
+        battleship = ShipManager.getShip(size, isHorizontal);
     }
-    public void setShip() {
-        switch (size) {
-            case 1:
-                player.battleship = Utility.importImg(Utility.battleship1);  // 1x1
-                player.battleshipRotate = Utility.importImg(Utility.battleship1);
-                break;
-            case 2:
-                player.battleship = Utility.importImg(Utility.battleship2); // 1x2
-                player.battleshipRotate = Utility.importImg(Utility.battleship2Rotate);
-                break;
-            case 3:
-                player.battleship = Utility.importImg(Utility.battleship3); // 1x3
-                player.battleshipRotate = Utility.importImg(Utility.battleship3Rotate);
-                break;
-            case 4:
-                player.battleship = Utility.importImg(Utility.battleship4); // 1x4
-                player.battleshipRotate = Utility.importImg(Utility.battleship4Rotate);
 
-        }
-    }
+
     public void attack(int x, int y) {
-        if (!player.isPlaced[x][y] || Player.isExploded[x][y]) {
+        if (!isPlaced[x][y] || Player.isExploded[x][y]) {
             System.out.println("Bắn xịt");
+            Player.isFailedShot[x][y] = true;
         } else {
             System.out.println("T đang bắn");
+            Player.isBroken[x][y] = true;
             HP--;
             if (HP <= 0) {
                 HP = 0;
@@ -74,10 +64,11 @@ public class Ship {
 
     public void placedBattleShip(int x, int y) {
         if (isAvailbleToPlace(x, y)) {
+            placedDone = true;
             System.out.println("T đã đặt: "  + size);
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    player.isPlaced[x + i][y + j] = true;
+                    isPlaced[x + i][y + j] = true;
                 }
             }
             xStartPosition = x;
@@ -92,22 +83,26 @@ public class Ship {
 
     public void drawShip(Graphics g, int xPos, int yPos) {
         if (isAvailbleToDraw(xPos, yPos)){
-            if (isHorizontal) g.drawImage(player.battleship, xPos * SQUARE_HEIGHT, yPos * SQUARE_WIDTH, SQUARE_WIDTH * width, SQUARE_HEIGHT * height, null);
-            else g.drawImage(player.battleshipRotate, xPos * SQUARE_HEIGHT, yPos * SQUARE_WIDTH, SQUARE_WIDTH * width, SQUARE_HEIGHT * height, null);
+            g.drawImage(battleship, xPos * SQUARE_HEIGHT, yPos * SQUARE_WIDTH, SQUARE_WIDTH * width, SQUARE_HEIGHT * height, null);
+            for (int i=0; i<width; i++){
+                for (int j=0; j<height; j++){
+                    player.isDrawed[xPos+i][yPos+j] = true;
+                }
+            }
         }
     }
 
     private boolean isAvailbleToDraw(int xPos, int yPos) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (!player.isPlaced[xPos + i][yPos + j] || Player.isExploded[xPos + i][yPos + j]) return false;
+                if (!isPlaced[xPos + i][yPos + j] || Player.isExploded[xPos + i][yPos + j] ) return false;
             }
         }
         for (int i = 1; i < width; i++){
-            if (xPos >= width - i && xPos + width <= SQUARE_WIDTH && player.isPlaced[xPos - width + i][yPos] && player.isPlaced[xPos + width][yPos]) return false;
+            if (xPos >= width - i && xPos + width <= SQUARE_WIDTH && isPlaced[xPos - width + i][yPos] && isPlaced[xPos + width][yPos]) return false;
         }
         for (int i=1; i<height; i++) {
-            if (yPos >= height - i && yPos + height <= SQUARE_HEIGHT && player.isPlaced[xPos][yPos - height + i] && player.isPlaced[xPos][yPos + height])
+            if (yPos >= height - i && yPos + height <= SQUARE_HEIGHT && isPlaced[xPos][yPos - height + i] && isPlaced[xPos][yPos + height])
                 return false;
         }
         return true;
@@ -116,7 +111,7 @@ public class Ship {
     private boolean isAvailbleToPlace(int xPos, int yPos) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (player.isPlaced[xPos + i][yPos + j] || Player.isExploded[xPos + i][yPos + j]) return false;
+                if (isPlaced[xPos + i][yPos + j] || Player.isExploded[xPos + i][yPos + j] || player.isDrawed[xPos + i][yPos + j]) return false;
             }
         }
         return true;
