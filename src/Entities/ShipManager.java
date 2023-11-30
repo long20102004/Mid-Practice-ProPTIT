@@ -43,11 +43,15 @@ public class ShipManager {
             System.out.println("Đã full tàu");
             return;
         }
+
+
         System.out.println("Tàu này là loại: " + size);
         Ship newShip = new Ship(player, size, isHorizontal);
         newShip.placedBattleShip(x, y);
         if (newShip.placedDone) shipsList.add(newShip);
         resetShipStatus();
+
+
         if (shipsList.size() == 5) {
             PlayerManager.setCountNumberPlayer(PlayerManager.getCountNumberPlayer() + 1);
             if (PlayerManager.getCountNumberPlayer() >= 2){
@@ -70,6 +74,7 @@ public class ShipManager {
                 break;
             }
         }
+        if (player.getPlayerManager().isSwitchStatus()) player.getPlayerManager().updatePlayerState();
     }
 
     public void renderAllShip(Graphics g) {

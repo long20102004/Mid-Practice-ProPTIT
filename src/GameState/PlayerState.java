@@ -34,6 +34,7 @@ public class PlayerState implements StateMethods {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        System.out.println(playerManager.isSwitchStatus());
         System.out.println(GameState.state);
         int xPos = e.getX() / SQUARE_WIDTH, yPos = e.getY() / SQUARE_HEIGHT;
         if (e.getButton() == MouseEvent.BUTTON3) {
