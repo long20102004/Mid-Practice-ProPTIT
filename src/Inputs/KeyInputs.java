@@ -24,17 +24,17 @@ public class KeyInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (!playerManager.switchStatus) {
+        if (!playerManager.isSwitchStatus()) {
             if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer1())
-                playerManager.playerState.keyPressed(e);
+                playerManager.getPlayerState().keyPressed(e);
             else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer2())
-                playerManager.playerState.keyPressed(e);
+                playerManager.getPlayerState().keyPressed(e);
         }
         else {
             if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer2())
-                playerManager.playerState.keyPressed(e);
+                playerManager.getPlayerState().keyPressed(e);
             else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer1())
-                playerManager.playerState.keyPressed(e);
+                playerManager.getPlayerState().keyPressed(e);
         }
     }
 

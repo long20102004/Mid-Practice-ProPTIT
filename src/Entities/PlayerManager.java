@@ -13,30 +13,40 @@ import java.awt.*;
 public class PlayerManager extends JPanel {
     private Player player1;
     private Player player2;
-    public PlayerState playerState;
-    public Player currentPlayer;
+    private PlayerState playerState;
+    private Player currentPlayer;
     private Game game;
-    public boolean switchStatus;
-    public static int countNumberPlayer;
+    private boolean switchStatus;
+    private static int countNumberPlayer;
+
 
     public PlayerManager(Game game) {
         this.game = game;
         initClass();
     }
+
+    public static int getCountNumberPlayer() {
+        return countNumberPlayer;
+    }
+
+    public static void setCountNumberPlayer(int countNumberPlayer) {
+        PlayerManager.countNumberPlayer = countNumberPlayer;
+    }
+
     public void initClass(){
         player1 = new Player(this);
         player1.initClass(Utility.getRandomBackGround());
         player2 = new Player(this);
         player2.initClass(Utility.getRandomBackGround());
 
-        player1.gameWindow = new GameWindow(player1, "PLAYER 1", new KeyInputs(this, player1));
+        player1.setGameWindow(new GameWindow(player1, "PLAYER 1", new KeyInputs(this, player1)));
         MouseInputs mouseInputs = new MouseInputs(this, player1);
         player1.addMouseListener(mouseInputs);
         player1.addMouseMotionListener(mouseInputs);
         player1.addKeyListener(new KeyInputs(this, player1));
 
 
-        player2.gameWindow = new GameWindow(player2, "PLAYER2", new KeyInputs(this, player2));
+        player2.setGameWindow(new GameWindow(player2, "PLAYER2", new KeyInputs(this, player2)));
         MouseInputs mouseInputs2 = new MouseInputs(this, player2);
         player2.addMouseListener(mouseInputs2);
         player2.addMouseMotionListener(mouseInputs2);
@@ -44,6 +54,7 @@ public class PlayerManager extends JPanel {
 
         playerState = new PlayerState(this, player1);
     }
+
 
     public Game getGame(){
         return game;
@@ -53,7 +64,7 @@ public class PlayerManager extends JPanel {
         player2.render(g);
     }
     public void updatePlayerState(){
-        if (!switchStatus){
+        if (!isSwitchStatus()){
             if (GameState.state == GameState.PLAYER1){
                 GameState.state = GameState.PLAYER2;
                 playerState.currentPlayer = player2;
@@ -76,11 +87,11 @@ public class PlayerManager extends JPanel {
     }
     public void update() {
         if (GameState.state == GameState.PLAYER1) {
-            player1.isPlaying = true;
-            player2.isPlaying = false;
+            player1.setPlaying(true);
+            player2.setPlaying(false);
         } else {
-            player1.isPlaying = false;
-            player2.isPlaying = true;
+            player1.setPlaying(false);
+            player2.setPlaying(true);
         }
     }
     public Player getPlayer1(){
@@ -88,5 +99,22 @@ public class PlayerManager extends JPanel {
     }
     public Player getPlayer2(){
         return player2;
+    }
+
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public boolean isSwitchStatus() {
+        return switchStatus;
+    }
+
+    public void setSwitchStatus(boolean switchStatus) {
+        this.switchStatus = switchStatus;
+    }
+
+    public PlayerState getPlayerState() {
+        return playerState;
     }
 }

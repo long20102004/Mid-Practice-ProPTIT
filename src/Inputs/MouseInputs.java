@@ -24,18 +24,18 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (!playerManager.switchStatus) {
+        if (!playerManager.isSwitchStatus()) {
             if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer1()) {
-                playerManager.playerState.mousePressed(e);
+                playerManager.getPlayerState().mousePressed(e);
             }
             else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer2())
-                playerManager.playerState.mousePressed(e);
+                playerManager.getPlayerState().mousePressed(e);
         }
         else {
             if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer2())
-                playerManager.playerState.mousePressed(e);
+                playerManager.getPlayerState().mousePressed(e);
             else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer1())
-                playerManager.playerState.mousePressed(e);
+                playerManager.getPlayerState().mousePressed(e);
         }
     }
 

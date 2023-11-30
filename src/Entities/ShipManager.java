@@ -1,7 +1,5 @@
 package Entities;
 
-import GameState.GameState;
-import Main.Game;
 import utilz.Utility;
 
 import java.awt.*;
@@ -41,7 +39,7 @@ public class ShipManager {
             System.out.println("Chưa chọn loại tàu, chọn lại đi");
             return;
         }
-        if (shipsList.size() >= 5 || PlayerManager.countNumberPlayer >= 2) {
+        if (shipsList.size() >= 5 || PlayerManager.getCountNumberPlayer() >= 2) {
             System.out.println("Đã full tàu");
             return;
         }
@@ -51,17 +49,17 @@ public class ShipManager {
         if (newShip.placedDone) shipsList.add(newShip);
         resetShipStatus();
         if (shipsList.size() == 5) {
-            PlayerManager.countNumberPlayer++;
-            if (PlayerManager.countNumberPlayer >= 2){
-                playerManager.currentPlayer = playerManager.getPlayer1();
-                playerManager.switchStatus = true;
+            PlayerManager.setCountNumberPlayer(PlayerManager.getCountNumberPlayer() + 1);
+            if (PlayerManager.getCountNumberPlayer() >= 2){
+                playerManager.setCurrentPlayer(playerManager.getPlayer1());
+                playerManager.setSwitchStatus(true);
             }
             playerManager.updatePlayerState();
         }
     }
 
     private void resetShipStatus() {
-        player.isHorizontal = true;
+        player.setHorizontal(true);
         player.setTypeShip(0);
     }
 
@@ -69,6 +67,7 @@ public class ShipManager {
         for (Ship ship : shipsList) {
             if (x >= ship.getxStartPosition() && x <= ship.getxEndPosition() && y >= ship.getyStartPosition() && y <= ship.getyEndPosition()) {
                 ship.attack(x, y);
+                break;
             }
         }
     }

@@ -2,7 +2,6 @@ package GameState;
 
 import Entities.Player;
 import Entities.PlayerManager;
-import Main.Game;
 import utilz.Utility;
 
 import java.awt.*;
@@ -15,17 +14,17 @@ import static utilz.ConstantVariable.*;
 public class PlayerState implements StateMethods {
     public Player currentPlayer;
     public PlayerManager playerManager;
-    BufferedImage waitingBack;
+    public BufferedImage waitingBack;
 
     public PlayerState(PlayerManager playerManager, Player currentPlayer) {
-        this.playerManager = playerManager;
-        this.currentPlayer = currentPlayer;
-        waitingBack = Utility.importImg(Utility.waitingBackground);
+        this.setPlayerManager(playerManager);
+        this.setCurrentPlayer(currentPlayer);
+        setWaitingBack(Utility.importImg(Utility.waitingBackground));
     }
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(waitingBack, 0, 0, SQUARE_WIDTH * NUMBER_OF_SQUARE, SQUARE_HEIGHT * NUMBER_OF_SQUARE, null);
+        g.drawImage(getWaitingBack(), 0, 0, SQUARE_WIDTH * NUMBER_OF_SQUARE, SQUARE_HEIGHT * NUMBER_OF_SQUARE, null);
     }
 
     @Override
@@ -38,10 +37,9 @@ public class PlayerState implements StateMethods {
         System.out.println(GameState.state);
         int xPos = e.getX() / SQUARE_WIDTH, yPos = e.getY() / SQUARE_HEIGHT;
         if (e.getButton() == MouseEvent.BUTTON3) {
-            currentPlayer.shipManager.addShip(currentPlayer.getTypeShip(), xPos, yPos, currentPlayer.isHorizontal);
+            getCurrentPlayer().getShipManager().addShip(getCurrentPlayer().getTypeShip(), xPos, yPos, getCurrentPlayer().isHorizontal());
         } else if (e.getButton() == MouseEvent.BUTTON1) {
-            currentPlayer.shipManager.attackShip(xPos, yPos);
-            playerManager.updatePlayerState();
+            getCurrentPlayer().getShipManager().attackShip(xPos, yPos);
         }
     }
 
@@ -79,22 +77,22 @@ public class PlayerState implements StateMethods {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_1:
-                currentPlayer.setTypeShip(1);
+                getCurrentPlayer().setTypeShip(1);
                 break;
             case KeyEvent.VK_2:
-                currentPlayer.setTypeShip(2);
+                getCurrentPlayer().setTypeShip(2);
                 break;
             case KeyEvent.VK_3:
-                currentPlayer.setTypeShip(3);
+                getCurrentPlayer().setTypeShip(3);
                 break;
             case KeyEvent.VK_4:
-                currentPlayer.setTypeShip(4);
+                getCurrentPlayer().setTypeShip(4);
                 break;
             case KeyEvent.VK_R:
-                currentPlayer.isHorizontal = false;
+                getCurrentPlayer().setHorizontal(false);
                 break;
             case KeyEvent.VK_ENTER:
-                currentPlayer.shipManager.isAddShipDone = true;
+                getCurrentPlayer().getShipManager().isAddShipDone = true;
                 break;
         }
     }
@@ -104,4 +102,27 @@ public class PlayerState implements StateMethods {
 
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
+
+    public void setPlayerManager(PlayerManager playerManager) {
+        this.playerManager = playerManager;
+    }
+
+    public BufferedImage getWaitingBack() {
+        return waitingBack;
+    }
+
+    public void setWaitingBack(BufferedImage waitingBack) {
+        this.waitingBack = waitingBack;
+    }
 }

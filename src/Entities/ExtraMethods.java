@@ -11,21 +11,19 @@ import static utilz.ConstantVariable.SQUARE_WIDTH;
 public class ExtraMethods {
     private Player player;
     private int xDrawPos = 0, yDrawPos = 0;
-    private int shipHeight, shipWidth;
-
     public ExtraMethods(Player player) {
         this.player = player;
     }
 
     public void drawExplode(Graphics g, int i, int j) {
-        if (!player.explodedAnimation[i][j] && Player.isExploded[i][j]) {
+        if (!player.getExplodedAnimation()[i][j] && player.getIsExploded()[i][j]) {
             if (xDrawPos < 9 && yDrawPos < 9) drawExplodeAnimation(g, j, i, xDrawPos, yDrawPos);
             xDrawPos++;
             if (xDrawPos >= 9) yDrawPos++;
             if (yDrawPos >= 9) {
                 xDrawPos = 0;
                 yDrawPos = 0;
-                player.explodedAnimation[i][j] = true;
+                player.getExplodedAnimation()[i][j] = true;
             }
         }
     }
@@ -35,13 +33,13 @@ public class ExtraMethods {
         BufferedImage img = Utility.importImg(Utility.explodeAni);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                player.explodeFrame[i][j] = img.getSubimage(j * EXPLODE_SIZE, i * EXPLODE_SIZE, EXPLODE_SIZE, EXPLODE_SIZE);
+                player.getExplodeFrame()[i][j] = img.getSubimage(j * EXPLODE_SIZE, i * EXPLODE_SIZE, EXPLODE_SIZE, EXPLODE_SIZE);
             }
         }
     }
 
     public void drawExplodeAnimation(Graphics g, int xPos, int yPos, int i, int j) { // Vẽ nổ
-        g.drawImage(player.explodeFrame[i][j], yPos * SQUARE_WIDTH, xPos * SQUARE_HEIGHT, EXPLODE_SIZE / 2, EXPLODE_SIZE / 2, null);
+        g.drawImage(player.getExplodeFrame()[i][j], yPos * SQUARE_WIDTH, xPos * SQUARE_HEIGHT, EXPLODE_SIZE / 2, EXPLODE_SIZE / 2, null);
     }
 
     BufferedImage[][] fire = new BufferedImage[100][100];
@@ -58,7 +56,7 @@ public class ExtraMethods {
     private int xFire, yFire;
 
     public void drawFire(Graphics g, int xPos, int yPos) {
-        if (player.explodedAnimation[xPos][yPos]) {
+        if (player.getExplodedAnimation()[xPos][yPos]) {
             if (xFire < 4 && yFire < 2)
                 g.drawImage(fire[xFire][yFire], xPos * SQUARE_HEIGHT + 13, yPos * SQUARE_WIDTH + 6, 27, 48, null); // Chưa xử lý được số liệu theo các hằng số
             xFire++;
@@ -78,7 +76,7 @@ public class ExtraMethods {
         BufferedImage img = Utility.importImg(Utility.smokeAni);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                player.smokeFrame[i][j] = img.getSubimage(j * 250, i * 170, 250, 170);
+                player.getSmokeFrame()[i][j] = img.getSubimage(j * 250, i * 170, 250, 170);
             }
         }
     }
@@ -86,10 +84,10 @@ public class ExtraMethods {
     private int xSmoke, ySmoke;
 
     public void drawSmoke(Graphics g, int i, int j) {
-        if (Player.isFailedShot[i][j]) {
+        if (player.getIsFailedShot()[i][j]) {
             System.out.println("Khói");
             if (xSmoke < 3 && ySmoke < 3) {
-                g.drawImage(player.smokeFrame[xSmoke][ySmoke], i*SQUARE_HEIGHT, j*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_HEIGHT * 170 / 250, null);
+                g.drawImage(player.getSmokeFrame()[xSmoke][ySmoke], i*SQUARE_HEIGHT, j*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_HEIGHT * 170 / 250, null);
             }
             xSmoke++;
             if (xSmoke >= 3) {
