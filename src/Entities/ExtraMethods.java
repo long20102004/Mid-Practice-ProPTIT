@@ -102,11 +102,23 @@ public class ExtraMethods {
             }
         }
     }
+    int timeTurnBackGround;
+    public void drawChangeTurnBackground(Graphics g){
+        BufferedImage img = Utility.importImg(Utility.waitingBackground);
+        if (timeTurnBackGround < 12) g.drawImage(img, 0,0, NUMBER_OF_SQUARE * SQUARE_WIDTH, NUMBER_OF_SQUARE * SQUARE_HEIGHT , null);
+        timeTurnBackGround++;
+    }
 
+
+    public void drawCorrectShot(Graphics g, int xPos, int yPos){
+        if (player.isBroken[xPos][yPos]) g.drawImage(player.brokenFrame, xPos * SQUARE_WIDTH, yPos*SQUARE_HEIGHT, SQUARE_WIDTH,SQUARE_HEIGHT, null);
+
+    }
     public void renderExtraMethods(Graphics g) {
         for (int i = 0; i < NUMBER_OF_SQUARE; i++) {
             for (int j = 0; j < NUMBER_OF_SQUARE; j++) {
                 drawSmoke(g, i, j);
+                drawCorrectShot(g,i,j);
                 drawExplode(g, i, j);
                 drawFire(g, i, j);
             }
@@ -114,6 +126,9 @@ public class ExtraMethods {
     }
 
 
+    public void importBroken() {
+        player.brokenFrame = Utility.importImg(Utility.broken);
+    }
 }
 
 

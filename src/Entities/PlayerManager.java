@@ -1,5 +1,6 @@
 package Entities;
 
+import Automatics.AutoPlace;
 import GameState.GameState;
 import Inputs.KeyInputs;
 import Inputs.MouseInputs;
@@ -11,13 +12,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PlayerManager extends JPanel {
-    private Player player1;
-    private Player player2;
+    public Player player1;
+    public Player player2;
     private PlayerState playerState;
     private Player currentPlayer;
     private Game game;
     private boolean switchStatus;
     private static int countNumberPlayer;
+    public AutoPlace autoPlace;
 
 
     public PlayerManager(Game game) {
@@ -53,16 +55,10 @@ public class PlayerManager extends JPanel {
         player2.addKeyListener(new KeyInputs(this, player2));
 
         playerState = new PlayerState(this, player1);
+        autoPlace = new AutoPlace(this);
     }
 
 
-    public Game getGame(){
-        return game;
-    }
-    public void render(Graphics g) {
-        player1.render(g);
-        player2.render(g);
-    }
     public void updatePlayerState(){
         if (!isSwitchStatus()){
             if (GameState.state == GameState.PLAYER1){
@@ -117,4 +113,5 @@ public class PlayerManager extends JPanel {
     public PlayerState getPlayerState() {
         return playerState;
     }
+
 }

@@ -17,9 +17,6 @@ public class Game implements Runnable{
     public void update(){
         playerManager.update();
     }
-    public void render(Graphics g){
-        playerManager.render(g);
-    }
     @Override
     public void run() {
         int frames = 0, updates = 0;

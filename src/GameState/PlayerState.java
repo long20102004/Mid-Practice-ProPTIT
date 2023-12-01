@@ -40,7 +40,7 @@ public class PlayerState implements StateMethods {
         if (e.getButton() == MouseEvent.BUTTON3) {
             getCurrentPlayer().getShipManager().addShip(getCurrentPlayer().getTypeShip(), xPos, yPos, getCurrentPlayer().isHorizontal());
         } else if (e.getButton() == MouseEvent.BUTTON1) {
-            getCurrentPlayer().getShipManager().attackShip(xPos, yPos);
+            currentPlayer.shipManager.attackShip(xPos, yPos);
         }
     }
 
@@ -93,14 +93,22 @@ public class PlayerState implements StateMethods {
                 getCurrentPlayer().setHorizontal(false);
                 break;
             case KeyEvent.VK_ENTER:
-                getCurrentPlayer().getShipManager().isAddShipDone = true;
+                break;
+            case KeyEvent.VK_SPACE:
+                playerManager.autoPlace.autoAddPlayer1();
+                break;
+            case KeyEvent.VK_BACK_SPACE:
+                playerManager.autoPlace.autoAddPlayer2();
                 break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+//        switch (e.getKeyCode()){
+//            case KeyEvent.VK_ENTER:
+//                playerManager.readyToSwap = false;
+//        }
     }
 
     public Player getCurrentPlayer() {

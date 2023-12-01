@@ -12,15 +12,16 @@ public class Player extends JComponent {
     private boolean isHorizontal = true;
     private PlayerManager playerManager;
     private Map map = new Map(this);
-    private ShipManager shipManager;
+    public ShipManager shipManager;
     private ExtraMethods extraMethods = new ExtraMethods(this);
     public BufferedImage[][] gameMap;
     private BufferedImage stick;
     public boolean[][] explodedAnimation = new boolean[100][100];
-    private boolean isPlaying = true;
+    public boolean isPlaying = true;
     public BufferedImage[][] explodeFrame = new BufferedImage[100][100];
     public boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem vị trí đã bị bắn hỏng hay chưa
     public BufferedImage[][] smokeFrame = new BufferedImage[100][100];
+    public BufferedImage brokenFrame;
     public boolean[][] isBroken = new boolean[100][100];
     public boolean[][] isFailedShot = new boolean[100][100];
     public boolean[][] isDrawed = new boolean[100][100];
@@ -37,10 +38,11 @@ public class Player extends JComponent {
         getExtraMethods().importExplodeAnimation();
         getExtraMethods().importFire();
         getExtraMethods().importSmoke();
+        getExtraMethods().importBroken();
     }
     public void render(Graphics g){
         map.renderMap(g);
-        if (isPlaying()) shipManager.renderAllShip(g);
+        if (isPlaying) shipManager.renderAllShip(g);
         extraMethods.renderExtraMethods(g);
     }
     public void paintComponent(Graphics g) {

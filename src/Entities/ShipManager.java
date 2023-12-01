@@ -39,18 +39,18 @@ public class ShipManager {
             System.out.println("Chưa chọn loại tàu, chọn lại đi");
             return;
         }
-        if (shipsList.size() >= 5 || PlayerManager.getCountNumberPlayer() >= 2) {
-            System.out.println("Đã full tàu");
-            return;
+//        if (PlayerManager.getCountNumberPlayer() >= 2) {
+//            System.out.println("Đã full tàu");
+//            return;
+//        }
+
+        if (shipsList.size() < 5) {
+            System.out.println("Tàu này là loại: " + size);
+            Ship newShip = new Ship(player, size, isHorizontal);
+            newShip.placedBattleShip(x, y);
+            if (newShip.placedDone) shipsList.add(newShip);
+            resetShipStatus();
         }
-
-
-        System.out.println("Tàu này là loại: " + size);
-        Ship newShip = new Ship(player, size, isHorizontal);
-        newShip.placedBattleShip(x, y);
-        if (newShip.placedDone) shipsList.add(newShip);
-        resetShipStatus();
-
 
         if (shipsList.size() == 5) {
             PlayerManager.setCountNumberPlayer(PlayerManager.getCountNumberPlayer() + 1);
@@ -68,12 +68,16 @@ public class ShipManager {
     }
 
     public void attackShip(int x, int y) {
+        if (!playerManager.isSwitchStatus()) return;
+        boolean isAttacked = false;
         for (Ship ship : shipsList) {
             if (x >= ship.getxStartPosition() && x <= ship.getxEndPosition() && y >= ship.getyStartPosition() && y <= ship.getyEndPosition()) {
                 ship.attack(x, y);
+                isAttacked = true;
                 break;
             }
         }
+        if (!isAttacked) player.isFailedShot[x][y] = true;
         if (player.getPlayerManager().isSwitchStatus()) player.getPlayerManager().updatePlayerState();
     }
 
