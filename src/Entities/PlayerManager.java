@@ -80,8 +80,6 @@ public class PlayerManager extends JPanel {
                 playerState.currentPlayer = player2;
             }
         }
-        if (player1.isLost) player2.isVictory = true;
-        if (player2.isLost) player1.isVictory = true;
     }
     public void update() {
         if (GameState.state == GameState.PLAYER1) {
@@ -91,6 +89,8 @@ public class PlayerManager extends JPanel {
             player1.setPlaying(false);
             player2.setPlaying(true);
         }
+        if (player1.isLost) player2.isVictory = true;
+        if (player2.isLost) player1.isVictory = true;
     }
     public Player getPlayer1(){
         return player1;

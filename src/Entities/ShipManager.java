@@ -64,6 +64,7 @@ public class ShipManager {
 
     public void attackShip(int x, int y) {
         if (!playerManager.isSwitchStatus()) return;
+        player.changeTurn = false;
         boolean isAttacked = false;
         for (Ship ship : shipsList) {
             if (x >= ship.getxStartPosition() && x <= ship.getxEndPosition() && y >= ship.getyStartPosition() && y <= ship.getyEndPosition()) {
@@ -73,7 +74,7 @@ public class ShipManager {
             }
         }
         if (!isAttacked) player.isFailedShot[x][y] = true;
-        if (player.getPlayerManager().isSwitchStatus()) player.getPlayerManager().updatePlayerState();
+        if (player.getPlayerManager().isSwitchStatus() && !player.changeTurn) player.getPlayerManager().updatePlayerState();
     }
 
     public void renderAllShip(Graphics g) {

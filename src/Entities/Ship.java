@@ -95,9 +95,10 @@
                 System.out.println("Nổ rồi đừng bắn nữa");
                 return;
             }
-            if (!player.isPlaced[x][y] || player.isExploded[x][y]) {
+            if (!player.isPlaced[x][y] || player.isExploded[x][y] || player.isBroken[x][y]) {
                 System.out.println("Bắn xịt");
             } else {
+                player.changeTurn = true;
                 System.out.println("T đang bắn");
                 player.isBroken[x][y] = true;
                 HP--;
