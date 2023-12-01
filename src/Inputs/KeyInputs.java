@@ -24,6 +24,7 @@ public class KeyInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (player.isLost) return;
         if (!playerManager.isSwitchStatus()) {
             if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer1())
                 playerManager.getPlayerState().keyPressed(e);

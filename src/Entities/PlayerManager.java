@@ -12,14 +12,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PlayerManager extends JPanel {
-    public Player player1;
-    public Player player2;
+    private Player player1;
+    private Player player2;
     private PlayerState playerState;
     private Player currentPlayer;
     private Game game;
     private boolean switchStatus;
     private static int countNumberPlayer;
-    public AutoPlace autoPlace;
+    private AutoPlace autoPlace;
 
 
     public PlayerManager(Game game) {
@@ -80,6 +80,8 @@ public class PlayerManager extends JPanel {
                 playerState.currentPlayer = player2;
             }
         }
+        if (player1.isLost) player2.isVictory = true;
+        if (player2.isLost) player1.isVictory = true;
     }
     public void update() {
         if (GameState.state == GameState.PLAYER1) {
@@ -114,4 +116,11 @@ public class PlayerManager extends JPanel {
         return playerState;
     }
 
+    public void setAutoPlace(AutoPlace autoPlace) {
+        this.autoPlace = autoPlace;
+    }
+
+    public AutoPlace getAutoPlace() {
+        return autoPlace;
+    }
 }

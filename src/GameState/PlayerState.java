@@ -95,10 +95,10 @@ public class PlayerState implements StateMethods {
             case KeyEvent.VK_ENTER:
                 break;
             case KeyEvent.VK_SPACE:
-                playerManager.autoPlace.autoAddPlayer1();
+                playerManager.getAutoPlace().autoAddPlayer1();
                 break;
             case KeyEvent.VK_BACK_SPACE:
-                playerManager.autoPlace.autoAddPlayer2();
+                playerManager.getAutoPlace().autoAddPlayer2();
                 break;
         }
     }

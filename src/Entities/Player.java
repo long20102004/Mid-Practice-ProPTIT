@@ -1,9 +1,10 @@
 package Entities;
+
 import Main.GameWindow;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
 
 
 public class Player extends JComponent {
@@ -14,37 +15,48 @@ public class Player extends JComponent {
     private Map map = new Map(this);
     public ShipManager shipManager;
     private ExtraMethods extraMethods = new ExtraMethods(this);
-    public BufferedImage[][] gameMap;
-    private BufferedImage stick;
-    public boolean[][] explodedAnimation = new boolean[100][100];
     public boolean isPlaying = true;
-    public BufferedImage[][] explodeFrame = new BufferedImage[100][100];
     public boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem vị trí đã bị bắn hỏng hay chưa
-    public BufferedImage[][] smokeFrame = new BufferedImage[100][100];
-    public BufferedImage brokenFrame;
     public boolean[][] isBroken = new boolean[100][100];
     public boolean[][] isFailedShot = new boolean[100][100];
     public boolean[][] isDrawed = new boolean[100][100];
     public boolean[][] isPlaced = new boolean[100][100];
+    public int numberExplodedShip;
+    public boolean changeTurn;
+    public boolean isLost;
+    public boolean isVictory;
 
-    public Player(PlayerManager playerManager){
+    public Player(PlayerManager playerManager) {
         this.setPlayerManager(playerManager);
     }
 
 
     public void initClass(String mapName) {
         setShipManager(new ShipManager(getPlayerManager(), this));
-        getMap().setMap(mapName);
-        getExtraMethods().importExplodeAnimation();
-        getExtraMethods().importFire();
-        getExtraMethods().importSmoke();
-        getExtraMethods().importBroken();
+        map.setMap(mapName);
+        extraMethods.importExplodeAnimation();
+        extraMethods.importFire();
+        extraMethods.importSmoke();
+        extraMethods.importBroken();
+        extraMethods.importLostScreen();
+        extraMethods.importVictoryScreen();
+
     }
-    public void render(Graphics g){
-        map.renderMap(g);
-        if (isPlaying) shipManager.renderAllShip(g);
-        extraMethods.renderExtraMethods(g);
+
+    public void render(Graphics g) {
+        if (isLost){
+            extraMethods.drawLostScreen(g);
+        }
+        else if (isVictory){
+            extraMethods.drawVictoryScreen(g);
+        }
+        else {
+            map.renderMap(g);
+            if (isPlaying) shipManager.renderAllShip(g);
+            extraMethods.renderExtraMethods(g);
+        }
     }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         render(g);
@@ -56,10 +68,6 @@ public class Player extends JComponent {
 
     public void setTypeShip(int typeShip) {
         this.typeShip = typeShip;
-    }
-
-    public GameWindow getGameWindow() {
-        return gameWindow;
     }
 
     public void setGameWindow(GameWindow gameWindow) {
@@ -82,13 +90,6 @@ public class Player extends JComponent {
         this.playerManager = playerManager;
     }
 
-    public Map getMap() {
-        return map;
-    }
-
-    public void setMap(Map map) {
-        this.map = map;
-    }
 
     public ShipManager getShipManager() {
         return shipManager;
@@ -100,22 +101,6 @@ public class Player extends JComponent {
 
     public ExtraMethods getExtraMethods() {
         return extraMethods;
-    }
-
-    public void setExtraMethods(ExtraMethods extraMethods) {
-        this.extraMethods = extraMethods;
-    }
-
-    public BufferedImage getStick() {
-        return stick;
-    }
-
-    public void setStick(BufferedImage stick) {
-        this.stick = stick;
-    }
-
-    public boolean isPlaying() {
-        return isPlaying;
     }
 
     public void setPlaying(boolean playing) {

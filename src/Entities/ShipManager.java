@@ -39,11 +39,6 @@ public class ShipManager {
             System.out.println("Chưa chọn loại tàu, chọn lại đi");
             return;
         }
-//        if (PlayerManager.getCountNumberPlayer() >= 2) {
-//            System.out.println("Đã full tàu");
-//            return;
-//        }
-
         if (shipsList.size() < 5) {
             System.out.println("Tàu này là loại: " + size);
             Ship newShip = new Ship(player, size, isHorizontal);

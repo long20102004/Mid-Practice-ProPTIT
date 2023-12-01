@@ -38,23 +38,13 @@
             battleship = ShipManager.getShip(size, isHorizontal);
         }
 
-
-        public void attack(int x, int y) {
-            if (!player.isPlaced[x][y] || player.isExploded[x][y]) {
-                System.out.println("Bắn xịt");
-            } else {
-                System.out.println("T đang bắn");
-                player.isBroken[x][y] = true;
-                HP--;
-                if (HP <= 0) {
-                    HP = 0;
-                    for (int i=xStartPosition; i<=xEndPosition; i++){
-                        for (int j=yStartPosition; j<=yEndPosition; j++){
-                            player.isExploded[i][j] = true;
-                        }
-                    }
+        private boolean isAvailbleToPlace(int xPos, int yPos) {
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    if (xPos + i + 1> NUMBER_OF_SQUARE || yPos + j + 1> NUMBER_OF_SQUARE || player.isPlaced[xPos + i][yPos + j] || player.isExploded[xPos + i][yPos + j] || player.isDrawed[xPos + i][yPos + j]) return false;
                 }
             }
+            return true;
         }
 
 
@@ -78,6 +68,15 @@
         }
 
 
+        private boolean isAvailbleToDraw(int xPos, int yPos) {
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    if (!player.isPlaced[xPos + i][yPos + j] || player.isExploded[xPos + i][yPos + j] ) return false;
+                }
+            }
+            return true;
+        }
+
         public void drawShip(Graphics g, int xPos, int yPos) {
             if (isAvailbleToDraw(xPos,yPos) && markHeadShip[xPos][yPos] ){
                 g.drawImage(battleship, xPos * SQUARE_HEIGHT, yPos * SQUARE_WIDTH, SQUARE_WIDTH * width, SQUARE_HEIGHT * height, null);
@@ -89,22 +88,31 @@
             }
         }
 
-        private boolean isAvailbleToDraw(int xPos, int yPos) {
-            for (int i = 0; i < width; i++) {
-                for (int j = 0; j < height; j++) {
-                    if (!player.isPlaced[xPos + i][yPos + j] || player.isExploded[xPos + i][yPos + j] ) return false;
-                }
-            }
-            return true;
-        }
 
-        private boolean isAvailbleToPlace(int xPos, int yPos) {
-            for (int i = 0; i < width; i++) {
-                for (int j = 0; j < height; j++) {
-                    if (xPos + i + 1> NUMBER_OF_SQUARE || yPos + j + 1> NUMBER_OF_SQUARE || player.isPlaced[xPos + i][yPos + j] || player.isExploded[xPos + i][yPos + j] || player.isDrawed[xPos + i][yPos + j]) return false;
+
+        public void attack(int x, int y) {
+            if (HP < 0){
+                System.out.println("Nổ rồi đừng bắn nữa");
+                return;
+            }
+            if (!player.isPlaced[x][y] || player.isExploded[x][y]) {
+                System.out.println("Bắn xịt");
+            } else {
+                System.out.println("T đang bắn");
+                player.isBroken[x][y] = true;
+                HP--;
+                if (HP <= 0) {
+                    player.numberExplodedShip++;
+                    if (player.numberExplodedShip == 5){
+                        player.isLost = true;
+                    }
+                    for (int i=xStartPosition; i<=xEndPosition; i++){
+                        for (int j=yStartPosition; j<=yEndPosition; j++){
+                            player.isExploded[i][j] = true;
+                        }
+                    }
                 }
             }
-            return true;
         }
 
 

@@ -30,6 +30,8 @@ public class Utility {
     public static final String smokeAni = "smoke.png";
     public static final String broken = "broken.png";
     public static final String turn = "turn.png";
+    public static final String victory = "victory.png";
+    public static final String defeated = "defeated.jpg";
     public static String getRandomBackGround(){
         arrayList.add(backgroundImage1);
         arrayList.add(backgroundImage2);

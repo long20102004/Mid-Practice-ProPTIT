@@ -10,40 +10,24 @@ import static utilz.ConstantVariable.SQUARE_WIDTH;
 
 public class ExtraMethods {
     private Player player;
-    private int xDrawPos = 0, yDrawPos = 0;
+    private int xDrawPos, yDrawPos;
+    private int xFire, yFire;
+    private int xSmoke, ySmoke;
+    BufferedImage[][] fire = new BufferedImage[100][100];
+    public BufferedImage brokenFrame;
+    public BufferedImage[][] explodeFrame = new BufferedImage[100][100];
+    public boolean[][] explodedAnimation = new boolean[100][100];
+    public BufferedImage[][] smokeFrame = new BufferedImage[100][100];
+    public BufferedImage lostScreen;
+    public BufferedImage victoryScreen;
 
     public ExtraMethods(Player player) {
         this.player = player;
     }
 
-    public void drawExplode(Graphics g, int i, int j) {
-        if (!player.explodedAnimation[i][j] && player.isExploded[i][j]) {
-            if (xDrawPos < 9 && yDrawPos < 9) drawExplodeAnimation(g, j, i, xDrawPos, yDrawPos);
-            xDrawPos++;
-            if (xDrawPos >= 9) yDrawPos++;
-            if (yDrawPos >= 9) {
-                xDrawPos = 0;
-                yDrawPos = 0;
-                player.explodedAnimation[i][j] = true;
-            }
-        }
+    public void importBroken() {
+        brokenFrame = Utility.importImg(Utility.broken);
     }
-
-
-    public void importExplodeAnimation() {
-        BufferedImage img = Utility.importImg(Utility.explodeAni);
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                player.explodeFrame[i][j] = img.getSubimage(j * EXPLODE_SIZE, i * EXPLODE_SIZE, EXPLODE_SIZE, EXPLODE_SIZE);
-            }
-        }
-    }
-
-    public void drawExplodeAnimation(Graphics g, int xPos, int yPos, int i, int j) { // Vẽ nổ
-        g.drawImage(player.explodeFrame[i][j], yPos * SQUARE_WIDTH, xPos * SQUARE_HEIGHT, EXPLODE_SIZE / 2, EXPLODE_SIZE / 2, null);
-    }
-
-    BufferedImage[][] fire = new BufferedImage[100][100];
 
     public void importFire() {
         BufferedImage img = Utility.importImg(Utility.burnLeft);
@@ -54,10 +38,48 @@ public class ExtraMethods {
         }
     }
 
-    private int xFire, yFire;
+    public void importExplodeAnimation() {
+        BufferedImage img = Utility.importImg(Utility.explodeAni);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                explodeFrame[i][j] = img.getSubimage(j * EXPLODE_SIZE, i * EXPLODE_SIZE, EXPLODE_SIZE, EXPLODE_SIZE);
+            }
+        }
+    }
+    public void importLostScreen(){
+        lostScreen = Utility.importImg(Utility.defeated);
+    }
+    public void importVictoryScreen() {
+        victoryScreen = Utility.importImg(Utility.victory);
+    }
+    public void drawExplode(Graphics g, int i, int j) {
+        if (!explodedAnimation[i][j] && player.isExploded[i][j]) {
+            if (xDrawPos < 9 && yDrawPos < 9) {
+                drawExplodeAnimation(g, j, i, xDrawPos, yDrawPos);
+                player.isBroken[i][j] = false;
+            }
+            xDrawPos++;
+            if (xDrawPos >= 9) yDrawPos++;
+            if (yDrawPos >= 9) {
+                xDrawPos = 0;
+                yDrawPos = 0;
+                explodedAnimation[i][j] = true;
+            }
+        }
+    }
+
+
+
+    public void drawExplodeAnimation(Graphics g, int xPos, int yPos, int i, int j) { // Vẽ nổ
+        g.drawImage(explodeFrame[i][j], yPos * SQUARE_WIDTH, xPos * SQUARE_HEIGHT, EXPLODE_SIZE / 2, EXPLODE_SIZE / 2, null);
+    }
+
+
+
+
 
     public void drawFire(Graphics g, int xPos, int yPos) {
-        if (player.explodedAnimation[xPos][yPos]) {
+        if (explodedAnimation[xPos][yPos]) {
             if (xFire < 4 && yFire < 2) {
                 g.drawImage(fire[xFire][yFire], xPos * SQUARE_HEIGHT + 13, yPos * SQUARE_WIDTH + 6, 27, 48, null); // Chưa xử lý được số liệu theo các hằng số
             }
@@ -78,18 +100,17 @@ public class ExtraMethods {
         BufferedImage img = Utility.importImg(Utility.smokeAni);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                player.smokeFrame[i][j] = img.getSubimage(j * 250, i * 170, 250, 170);
+                smokeFrame[i][j] = img.getSubimage(j * 250, i * 170, 250, 170);
             }
         }
     }
 
-    private int xSmoke, ySmoke;
 
     public void drawSmoke(Graphics g, int i, int j) {
         if (player.isFailedShot[i][j]) {
             System.out.println("Khói");
             if (xSmoke < 3 && ySmoke < 3) {
-                g.drawImage(player.smokeFrame[xSmoke][ySmoke], i * SQUARE_HEIGHT, j * SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_HEIGHT * 170 / 250, null);
+                g.drawImage(smokeFrame[xSmoke][ySmoke], i * SQUARE_HEIGHT, j * SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_HEIGHT * 170 / 250, null);
             }
             xSmoke++;
             if (xSmoke >= 3) {
@@ -111,13 +132,20 @@ public class ExtraMethods {
 
 
     public void drawCorrectShot(Graphics g, int xPos, int yPos){
-        if (player.isBroken[xPos][yPos]) g.drawImage(player.brokenFrame, xPos * SQUARE_WIDTH, yPos*SQUARE_HEIGHT, SQUARE_WIDTH,SQUARE_HEIGHT, null);
+        if (player.isBroken[xPos][yPos]) g.drawImage(brokenFrame, xPos * SQUARE_WIDTH, yPos*SQUARE_HEIGHT, SQUARE_WIDTH,SQUARE_HEIGHT, null);
 
+    }
+
+    public void drawLostScreen(Graphics g){
+        g.drawImage(lostScreen, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null );
+    }
+    public void drawVictoryScreen(Graphics g){
+        g.drawImage(victoryScreen, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
     }
     public void renderExtraMethods(Graphics g) {
         for (int i = 0; i < NUMBER_OF_SQUARE; i++) {
             for (int j = 0; j < NUMBER_OF_SQUARE; j++) {
-                drawSmoke(g, i, j);
+                if (!player.isPlaying) drawSmoke(g, i, j);
                 drawCorrectShot(g,i,j);
                 drawExplode(g, i, j);
                 drawFire(g, i, j);
@@ -126,9 +154,6 @@ public class ExtraMethods {
     }
 
 
-    public void importBroken() {
-        player.brokenFrame = Utility.importImg(Utility.broken);
-    }
 }
 
 
