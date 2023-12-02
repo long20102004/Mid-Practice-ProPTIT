@@ -55,6 +55,7 @@ public class Player extends JComponent {
             map.renderMap(g);
             if (isPlaying) shipManager.renderAllShip(g);
             extraMethods.renderExtraMethods(g);
+            if (!isPlaying && !playerManager.isSwitchStatus()) extraMethods.drawChangeTurnBackground(g);
         }
     }
 

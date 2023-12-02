@@ -119,11 +119,9 @@ public class ExtraMethods {
             }
         }
     }
-    int timeTurnBackGround;
     public void drawChangeTurnBackground(Graphics g){
         BufferedImage img = Utility.importImg(Utility.waitingBackground);
-        if (timeTurnBackGround < 12) g.drawImage(img, 0,0, NUMBER_OF_SQUARE * SQUARE_WIDTH, NUMBER_OF_SQUARE * SQUARE_HEIGHT , null);
-        timeTurnBackGround++;
+        g.drawImage(img, 0,0, NUMBER_OF_SQUARE * SQUARE_WIDTH, NUMBER_OF_SQUARE * SQUARE_HEIGHT , null);
     }
 
 
