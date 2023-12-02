@@ -29,11 +29,21 @@ public class AutoPlace {
 
     public void autoAddPlayer2() {
         while (playerManager.getPlayer2().getShipManager().shipsList.size() < 5) {
-            int size = rnd.nextInt(1,4);
+            int size = rnd.nextInt(1,5);
             int xPosition = rnd.nextInt(0, NUMBER_OF_SQUARE);
             int yPosition = rnd.nextInt(0, NUMBER_OF_SQUARE);
             boolean isHorizontal = rnd.nextBoolean();
             playerManager.getPlayer2().shipManager.addShip(size,xPosition,yPosition,isHorizontal);
+        }
+    }
+
+    public void autoAddBot(){
+        while (playerManager.getBot().shipManager.shipsList.size() < 5){
+            int size = rnd.nextInt(1,5);
+            int xPosition = rnd.nextInt(0, NUMBER_OF_SQUARE);
+            int yPosition = rnd.nextInt(0, NUMBER_OF_SQUARE);
+            boolean isHorizontal = rnd.nextBoolean();
+            playerManager.getBot().shipManager.addShip(size,xPosition,yPosition,isHorizontal);
         }
     }
 }

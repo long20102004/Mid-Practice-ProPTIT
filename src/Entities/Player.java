@@ -8,13 +8,13 @@ import java.awt.image.BufferedImage;
 
 
 public class Player extends JComponent {
-    private GameWindow gameWindow;
-    private int typeShip = 0;
-    private boolean isHorizontal = true;
-    private PlayerManager playerManager;
-    private Map map = new Map(this);
+    protected GameWindow gameWindow;
+    protected int typeShip = 0;
+    protected boolean isHorizontal = true;
+    protected PlayerManager playerManager;
+    protected Map map = new Map(this);
     public ShipManager shipManager;
-    private ExtraMethods extraMethods = new ExtraMethods(this);
+    protected ExtraMethods extraMethods = new ExtraMethods(this);
     public boolean isPlaying = true;
     public boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem vị trí đã bị bắn hỏng hay chưa
     public boolean[][] isBroken = new boolean[100][100];
@@ -22,9 +22,10 @@ public class Player extends JComponent {
     public boolean[][] isDrawed = new boolean[100][100];
     public boolean[][] isPlaced = new boolean[100][100];
     public int numberExplodedShip;
-    public boolean changeTurn;
+    public static boolean changeTurn;
     public boolean isLost;
     public boolean isVictory;
+    protected boolean isActive;
 
     public Player(PlayerManager playerManager) {
         this.setPlayerManager(playerManager);
@@ -99,11 +100,10 @@ public class Player extends JComponent {
         this.shipManager = shipManager;
     }
 
-    public ExtraMethods getExtraMethods() {
-        return extraMethods;
-    }
-
     public void setPlaying(boolean playing) {
         isPlaying = playing;
+    }
+    public void setIsActive(boolean isActive){
+        this.isActive = isActive;
     }
 }

@@ -34,13 +34,18 @@ public class PlayerState implements StateMethods {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println(playerManager.isSwitchStatus());
         System.out.println(GameState.state);
         int xPos = e.getX() / SQUARE_WIDTH, yPos = e.getY() / SQUARE_HEIGHT;
         if (e.getButton() == MouseEvent.BUTTON3) {
             getCurrentPlayer().getShipManager().addShip(getCurrentPlayer().getTypeShip(), xPos, yPos, getCurrentPlayer().isHorizontal());
         } else if (e.getButton() == MouseEvent.BUTTON1) {
-            currentPlayer.shipManager.attackShip(xPos, yPos);
+            if (GameMode.gameMode == GameMode.PVE && currentPlayer == playerManager.getBot()) {
+                currentPlayer.shipManager.attackShip(xPos, yPos);
+                if (!currentPlayer.isBroken[xPos][yPos]) playerManager.getBot().autoAttack();
+            }
+            if (GameMode.gameMode == GameMode.PVP) {
+                currentPlayer.shipManager.attackShip(xPos, yPos);
+            }
         }
     }
 
@@ -98,7 +103,7 @@ public class PlayerState implements StateMethods {
                 playerManager.getAutoPlace().autoAddPlayer1();
                 break;
             case KeyEvent.VK_BACK_SPACE:
-                playerManager.getAutoPlace().autoAddPlayer2();
+                if (GameMode.gameMode == GameMode.PVP) playerManager.getAutoPlace().autoAddPlayer2();
                 break;
         }
     }

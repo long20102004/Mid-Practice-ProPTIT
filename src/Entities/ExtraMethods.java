@@ -75,9 +75,6 @@ public class ExtraMethods {
     }
 
 
-
-
-
     public void drawFire(Graphics g, int xPos, int yPos) {
         if (explodedAnimation[xPos][yPos]) {
             if (xFire < 4 && yFire < 2) {
@@ -108,7 +105,6 @@ public class ExtraMethods {
 
     public void drawSmoke(Graphics g, int i, int j) {
         if (player.isFailedShot[i][j]) {
-            System.out.println("Khói");
             if (xSmoke < 3 && ySmoke < 3) {
                 g.drawImage(smokeFrame[xSmoke][ySmoke], i * SQUARE_HEIGHT, j * SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_HEIGHT * 170 / 250, null);
             }
@@ -145,7 +141,7 @@ public class ExtraMethods {
     public void renderExtraMethods(Graphics g) {
         for (int i = 0; i < NUMBER_OF_SQUARE; i++) {
             for (int j = 0; j < NUMBER_OF_SQUARE; j++) {
-                if (!player.isPlaying) drawSmoke(g, i, j);
+                drawSmoke(g, i, j);
                 drawCorrectShot(g,i,j);
                 drawExplode(g, i, j);
                 drawFire(g, i, j);

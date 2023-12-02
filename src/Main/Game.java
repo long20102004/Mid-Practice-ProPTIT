@@ -1,11 +1,12 @@
 package Main;
 import Entities.PlayerManager;
+import GameState.GameMode;
 
 import java.awt.*;
 
 public class Game implements Runnable{
     private final int FPS = 6;
-    private final int UPS = 20000;
+    private final int UPS = 200;
     private PlayerManager playerManager = new PlayerManager(this);
     public Game(){
         startGameLoop();
@@ -36,14 +37,20 @@ public class Game implements Runnable{
                 updates++;
             }
             if (deltaFrameTime >= 1){
-                playerManager.getPlayer1().repaint();
-                playerManager.getPlayer2().repaint();
+                if (GameMode.gameMode == GameMode.PVP) {
+                    playerManager.getPlayer1().repaint();
+                    playerManager.getPlayer2().repaint();
+                }
+                else{
+                    playerManager.getPlayer1().repaint();
+                    playerManager.getBot().repaint();
+                }
                 deltaFrameTime--;
                 frames++;
             }
             if (System.currentTimeMillis() - timeCheck >= 1000){
                 timeCheck = System.currentTimeMillis();
-                System.out.println("FPS: " + FPS + " | UPS: " + UPS);
+//                System.out.println("FPS: " + FPS + " | UPS: " + UPS);
                 frames = 0;
                 updates = 0;
             }

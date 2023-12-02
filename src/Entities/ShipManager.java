@@ -1,5 +1,7 @@
 package Entities;
 
+import GameState.GameMode;
+import GameState.GameState;
 import utilz.Utility;
 
 import java.awt.*;
@@ -34,6 +36,7 @@ public class ShipManager {
         }
         return null;
     }
+
     public void addShip(int size, int x, int y, boolean isHorizontal) {
         if (size == 0) {
             System.out.println("Chưa chọn loại tàu, chọn lại đi");
@@ -49,7 +52,9 @@ public class ShipManager {
 
         if (shipsList.size() == 5) {
             PlayerManager.setCountNumberPlayer(PlayerManager.getCountNumberPlayer() + 1);
-            if (PlayerManager.getCountNumberPlayer() >= 2){
+            if (PlayerManager.getCountNumberPlayer() == 1)
+                if (GameMode.gameMode == GameMode.PVE) playerManager.getAutoPlace().autoAddBot();
+            if (PlayerManager.getCountNumberPlayer() >= 2) {
                 playerManager.setCurrentPlayer(playerManager.getPlayer1());
                 playerManager.setSwitchStatus(true);
             }
@@ -62,9 +67,9 @@ public class ShipManager {
         player.setTypeShip(0);
     }
 
-    public void attackShip(int x, int y) {
-        if (!playerManager.isSwitchStatus()) return;
-        player.changeTurn = false;
+    public boolean attackShip(int x, int y) {
+        if (!playerManager.isSwitchStatus()) return false;
+        Player.changeTurn = false;
         boolean isAttacked = false;
         for (Ship ship : shipsList) {
             if (x >= ship.getxStartPosition() && x <= ship.getxEndPosition() && y >= ship.getyStartPosition() && y <= ship.getyEndPosition()) {
@@ -74,7 +79,9 @@ public class ShipManager {
             }
         }
         if (!isAttacked) player.isFailedShot[x][y] = true;
-        if (player.getPlayerManager().isSwitchStatus() && !player.changeTurn) player.getPlayerManager().updatePlayerState();
+        if (!Player.changeTurn && player.getPlayerManager().isSwitchStatus())
+            player.getPlayerManager().updatePlayerState();
+        return Player.changeTurn;
     }
 
     public void renderAllShip(Graphics g) {

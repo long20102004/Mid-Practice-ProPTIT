@@ -3,6 +3,7 @@ package Inputs;
 import Entities.Player;
 import Entities.PlayerManager;
 import GameState.GameState;
+import GameState.GameMode;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -25,18 +26,31 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (player.isLost) return;
-        if (!playerManager.isSwitchStatus()) {
-            if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer1()) {
-                playerManager.getPlayerState().mousePressed(e);
+        if (GameMode.gameMode == GameMode.PVP) {
+            if (!playerManager.isSwitchStatus()) {
+                if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer1()) {
+                    playerManager.getPlayerState().mousePressed(e);
+                } else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer2())
+                    playerManager.getPlayerState().mousePressed(e);
+            } else {
+                if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer2())
+                    playerManager.getPlayerState().mousePressed(e);
+                else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer1())
+                    playerManager.getPlayerState().mousePressed(e);
             }
-            else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer2())
-                playerManager.getPlayerState().mousePressed(e);
         }
-        else {
-            if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer2())
-                playerManager.getPlayerState().mousePressed(e);
-            else if (GameState.state == GameState.PLAYER2 && player == playerManager.getPlayer1())
-                playerManager.getPlayerState().mousePressed(e);
+        if (GameMode.gameMode == GameMode.PVE){
+            if (!playerManager.isSwitchStatus()) {
+                if (GameState.state == GameState.PLAYER1 && player == playerManager.getPlayer1()) {
+                    playerManager.getPlayerState().mousePressed(e);
+                } else if (GameState.state == GameState.BOT && player == playerManager.getBot())
+                    playerManager.getPlayerState().mousePressed(e);
+            } else {
+                if (GameState.state == GameState.PLAYER1 && player == playerManager.getBot())
+                    playerManager.getPlayerState().mousePressed(e);
+                else if (GameState.state == GameState.BOT && player == playerManager.getPlayer1())
+                    playerManager.getPlayerState().mousePressed(e);
+            }
         }
     }
 

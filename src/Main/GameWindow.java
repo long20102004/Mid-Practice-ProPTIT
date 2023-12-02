@@ -19,7 +19,7 @@ public class GameWindow extends JFrame{
         jframe.setTitle(name);
         setWindowSize();
         jframe.add(player);
-        jframe.addKeyListener(keyInputs);
+        if (keyInputs != null) jframe.addKeyListener(keyInputs);
         jframe.pack();
         jframe.setVisible(true);
     }

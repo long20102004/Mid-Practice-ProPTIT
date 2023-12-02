@@ -1,5 +1,8 @@
     package Entities;
 
+    import Automatics.Bot;
+    import GameState.GameMode;
+
     import java.awt.*;
     import java.awt.image.BufferedImage;
 
@@ -90,30 +93,32 @@
 
 
 
-        public void attack(int x, int y) {
-            if (HP < 0){
-                System.out.println("Nổ rồi đừng bắn nữa");
-                return;
-            }
-            if (!player.isPlaced[x][y] || player.isExploded[x][y] || player.isBroken[x][y]) {
-                System.out.println("Bắn xịt");
-            } else {
-                player.changeTurn = true;
-                System.out.println("T đang bắn");
-                player.isBroken[x][y] = true;
-                HP--;
-                if (HP <= 0) {
-                    player.numberExplodedShip++;
-                    if (player.numberExplodedShip == 5){
-                        player.isLost = true;
-                    }
-                    for (int i=xStartPosition; i<=xEndPosition; i++){
-                        for (int j=yStartPosition; j<=yEndPosition; j++){
-                            player.isExploded[i][j] = true;
+            public void attack(int x, int y) {
+                if (HP < 0){
+                    System.out.println("Nổ rồi đừng bắn nữa");
+                    Player.changeTurn = true;
+                    return;
+                }
+                if (player.isBroken[x][y]) Player.changeTurn = true;
+                if (!player.isPlaced[x][y] || player.isExploded[x][y] || player.isBroken[x][y] || player.isFailedShot[x][y]) {
+                    System.out.println("Bắn xịt");
+                } else {
+                    Player.changeTurn = true;
+                    System.out.println("T đang bắn");
+                    player.isBroken[x][y] = true;
+                    HP--;
+                    if (HP <= 0) {
+                        player.numberExplodedShip++;
+                        if (player.numberExplodedShip == 5){
+                            player.isLost = true;
+                        }
+                        for (int i=xStartPosition; i<=xEndPosition; i++){
+                            for (int j=yStartPosition; j<=yEndPosition; j++){
+                                player.isExploded[i][j] = true;
+                            }
                         }
                     }
                 }
-            }
         }
 
 
