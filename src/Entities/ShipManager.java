@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ShipManager {
     private Player player;
     private PlayerManager playerManager;
-
+    public int countSize1Ship, countSize2Ship, countSize3Ship, countSize4Ship;
     public ShipManager(PlayerManager playerManager, Player player) {
         this.playerManager = playerManager;
         this.player = player;
@@ -36,17 +36,31 @@ public class ShipManager {
         }
         return null;
     }
+    public boolean isSizeValid(int x){
+        if (x == 0 || x > 4) return false;
+        if (x == 1 && countSize1Ship > 1) return false;
+        if (x == 2 && countSize2Ship > 0) return false;
+        if (x == 3 && countSize3Ship > 0) return false;
+        if (x == 4 && countSize4Ship > 0) return false;
+        return true;
+    }
 
     public void addShip(int size, int x, int y, boolean isHorizontal) {
-        if (size == 0) {
-            System.out.println("Chưa chọn loại tàu, chọn lại đi");
+        if (!isSizeValid(size)) {
+            System.out.println("Size tàu không hợp lệ, vui lòng chọn lại");
             return;
         }
         if (shipsList.size() < 5) {
             System.out.println("Tàu này là loại: " + size);
             Ship newShip = new Ship(player, size, isHorizontal);
             newShip.placedBattleShip(x, y);
-            if (newShip.placedDone) shipsList.add(newShip);
+            if (newShip.placedDone) {
+                shipsList.add(newShip);
+                if (size == 1) countSize1Ship++;
+                if (size == 2) countSize2Ship++;
+                if (size == 3) countSize3Ship++;
+                if (size == 4) countSize4Ship++;
+            }
             resetShipStatus();
         }
 
