@@ -13,11 +13,15 @@ import static utilz.ConstantVariable.*;
 public class Bot extends Player {
     private PlayerManager playerManager;
     private final Random rnd = new Random();
-    public int lastXIndex, lastYIndex;
+    private boolean isPotential;
+    public static boolean isExploded;
+    public int lastXIndex, lastYIndex, x, y;
 
     public Bot(PlayerManager playerManager) {
         super(playerManager);
         this.playerManager = playerManager;
+        x = rnd.nextInt(0, NUMBER_OF_SQUARE);
+        y = rnd.nextInt(0, NUMBER_OF_SQUARE);
     }
 
     public boolean isIndexValid(int xPos, int yPos) {
@@ -26,26 +30,37 @@ public class Bot extends Player {
     }
 
     public void autoAttack() {
-        int x = rnd.nextInt(0, NUMBER_OF_SQUARE);
-        int y = rnd.nextInt(0, NUMBER_OF_SQUARE);
         boolean isHit = playerManager.getPlayer1().shipManager.attackShip(x, y);
+        if (isHit){
+            isPotential = true;
+            lastXIndex = x;
+            lastYIndex = y;
+        }
+        if (isHit == false && isPotential){
+            x = lastXIndex;
+            y = lastYIndex;
+        }
+        else{
+            x = rnd.nextInt(0, NUMBER_OF_SQUARE);
+            y = rnd.nextInt(0, NUMBER_OF_SQUARE);
+        }
         while (isHit) {
-            if (isIndexValid(lastXIndex, lastYIndex + 1)) y++;
-            else if (isIndexValid(lastXIndex + 1, lastYIndex)) x++;
-            else if (isIndexValid(lastXIndex - 1, lastYIndex))  x--;
-            else  y--;
+            if (isIndexValid(x, y + 1)) {
+                y++;
+            }
+            else if (isIndexValid(x, y- 1)){
+                y--;
+            } else if (isIndexValid(x+1,y)) {
+                x++;
+            }
+            else x--;
             isHit = playerManager.getPlayer1().shipManager.attackShip(x,y);
         }
-//        if (!isLastShotCorrect) {
-//            int x = rnd.nextInt(0, NUMBER_OF_SQUARE);
-//            int y = rnd.nextInt(0, NUMBER_OF_SQUARE);
-//            playerManager.getPlayer1().shipManager.attackShip(x, y);
-//        }
-//        if (isLastShotCorrect){
-//
-//        }
     }
 
+    public void setPotential(boolean potential){
+        this.isPotential = potential;
+    }
 
     @Override
     public void render(Graphics g) {

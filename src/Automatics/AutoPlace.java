@@ -17,6 +17,7 @@ public class AutoPlace {
 
 
     public void autoAddPlayer1() {
+        playerManager.getPlayer1().isAuto = true;
         while (playerManager.getPlayer1().getShipManager().shipsList.size() < 5) {
             int size = rnd.nextInt(1,5);
             int xPosition = rnd.nextInt(0, NUMBER_OF_SQUARE);
@@ -28,6 +29,7 @@ public class AutoPlace {
 
 
     public void autoAddPlayer2() {
+        playerManager.getPlayer2().isAuto = true;
         while (playerManager.getPlayer2().getShipManager().shipsList.size() < 5) {
             int size = rnd.nextInt(1,5);
             int xPosition = rnd.nextInt(0, NUMBER_OF_SQUARE);
@@ -38,6 +40,7 @@ public class AutoPlace {
     }
 
     public void autoAddBot(){
+        playerManager.getBot().isAuto = true;
         while (playerManager.getBot().shipManager.shipsList.size() < 5){
             int size = rnd.nextInt(1,5);
             int xPosition = rnd.nextInt(0, NUMBER_OF_SQUARE);

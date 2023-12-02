@@ -4,7 +4,6 @@ import Main.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 
 public class Player extends JComponent {
@@ -26,6 +25,7 @@ public class Player extends JComponent {
     public boolean isLost;
     public boolean isVictory;
     protected boolean isActive;
+    public boolean isAuto;
 
     public Player(PlayerManager playerManager) {
         this.setPlayerManager(playerManager);
@@ -74,6 +74,9 @@ public class Player extends JComponent {
 
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
+    }
+    public GameWindow getGameWindow(){
+        return gameWindow;
     }
 
     public boolean isHorizontal() {

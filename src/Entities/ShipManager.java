@@ -1,9 +1,11 @@
 package Entities;
 
+import Automatics.Bot;
 import GameState.GameMode;
 import GameState.GameState;
 import utilz.Utility;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class ShipManager {
 
     public void addShip(int size, int x, int y, boolean isHorizontal) {
         if (!isSizeValid(size)) {
-            System.out.println("Size tàu không hợp lệ, vui lòng chọn lại");
+            if (!player.isAuto) JOptionPane.showMessageDialog(player.gameWindow.getJframe(), "Tàu không hợp lệ. Vui lòng đặt lại");
             return;
         }
         if (shipsList.size() < 5) {
@@ -85,6 +87,7 @@ public class ShipManager {
         if (!playerManager.isSwitchStatus()) return false;
         Player.changeTurn = false;
         boolean isAttacked = false;
+        Bot.isExploded = false;
         for (Ship ship : shipsList) {
             if (x >= ship.getxStartPosition() && x <= ship.getxEndPosition() && y >= ship.getyStartPosition() && y <= ship.getyEndPosition()) {
                 ship.attack(x, y);
@@ -92,6 +95,7 @@ public class ShipManager {
                 break;
             }
         }
+        if (Bot.isExploded) playerManager.getBot().setPotential(false);
         if (!isAttacked) player.isFailedShot[x][y] = true;
         if (!Player.changeTurn && player.getPlayerManager().isSwitchStatus())
             player.getPlayerManager().updatePlayerState();

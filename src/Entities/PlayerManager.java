@@ -9,7 +9,9 @@ import Main.Game;
 import Main.GameWindow;
 import utilz.Utility;
 import GameState.PlayerState;
+
 import javax.swing.*;
+
 import GameState.GameMode;
 
 public class PlayerManager extends JPanel {
@@ -37,44 +39,45 @@ public class PlayerManager extends JPanel {
         PlayerManager.countNumberPlayer = countNumberPlayer;
     }
 
-    public void initClass(){
+    public void initClass() {
         player1 = new Player(this);
         player1.initClass(Utility.getRandomBackGround());
         player2 = new Player(this);
         player2.initClass(Utility.getRandomBackGround());
 
-        player1.setGameWindow(new GameWindow(player1, "PLAYER 1", new KeyInputs(this, player1)));
-        MouseInputs mouseInputs = new MouseInputs(this, player1);
-        player1.addMouseListener(mouseInputs);
-        player1.addMouseMotionListener(mouseInputs);
-        player1.addKeyListener(new KeyInputs(this, player1));
+        bot = new Bot(this);
+        bot.initClass(Utility.getRandomBackGround());
 
+        playerState = new PlayerState(this, player1);
+        autoPlace = new AutoPlace(this);
+
+
+        if (GameMode.gameMode != GameMode.NOTREADY) {
+            player1.setGameWindow(new GameWindow(player1, "PLAYER 1", new KeyInputs(this, player1)));
+            MouseInputs mouseInputs = new MouseInputs(this, player1);
+            player1.addMouseListener(mouseInputs);
+            player1.addMouseMotionListener(mouseInputs);
+            player1.addKeyListener(new KeyInputs(this, player1));
+        }
         if (GameMode.gameMode == GameMode.PVP) {
             player2.setGameWindow(new GameWindow(player2, "PLAYER2", new KeyInputs(this, player2)));
             MouseInputs mouseInputs2 = new MouseInputs(this, player2);
             player2.addMouseListener(mouseInputs2);
             player2.addMouseMotionListener(mouseInputs2);
             player2.addKeyListener(new KeyInputs(this, player2));
-
-
         }
-
-
         if (GameMode.gameMode == GameMode.PVE) {
-            bot = new Bot(this);
-            bot.initClass(Utility.getRandomBackGround());
             bot.setGameWindow(new GameWindow(bot, "BOT", new KeyInputs(this, bot)));
             MouseInputs mouseInputsBot = new MouseInputs(this, bot);
             bot.addMouseListener(mouseInputsBot);
-            bot.addMouseMotionListener(mouseInputs);
+            bot.addMouseMotionListener(mouseInputsBot);
             bot.addKeyListener(new KeyInputs(this, bot));
         }
-        playerState = new PlayerState(this, player1);
-        autoPlace = new AutoPlace(this);
+
     }
 
 
-    public void updatePlayerState(){
+    public void updatePlayerState() {
         if (GameMode.gameMode == GameMode.PVP) {
             if (!isSwitchStatus()) {
                 if (GameState.state == GameState.PLAYER1) {
@@ -93,8 +96,7 @@ public class PlayerManager extends JPanel {
                     playerState.currentPlayer = player2;
                 }
             }
-        }
-        else if (GameMode.gameMode == GameMode.PVE){
+        } else if (GameMode.gameMode == GameMode.PVE) {
             // Xử lý đổi trạng thái của chế độ PVE
             if (!isSwitchStatus()) {
                 if (GameState.state == GameState.PLAYER1) {
@@ -115,17 +117,19 @@ public class PlayerManager extends JPanel {
             }
         }
     }
+
     public void update() {
-        if (GameMode.gameMode == GameMode.PVP){
+        if (GameMode.gameMode == GameMode.PVP) {
             player1.setIsActive(true);
             player2.setIsActive(true);
 //            bot.setIsActive(false);
-        }
-        else if (GameMode.gameMode == GameMode.PVE){
+        } else if (GameMode.gameMode == GameMode.PVE) {
             player1.setIsActive(true);
             bot.setIsActive(true);
 //            player2.setIsActive(false);
         }
+
+
         if (GameMode.gameMode == GameMode.PVP) {
             if (GameState.state == GameState.PLAYER1) {
                 player1.setPlaying(true);
@@ -136,8 +140,7 @@ public class PlayerManager extends JPanel {
             }
             if (player1.isLost) player2.isVictory = true;
             if (player2.isLost) player1.isVictory = true;
-        }
-        else if (GameMode.gameMode == GameMode.PVE){
+        } else if (GameMode.gameMode == GameMode.PVE) {
             // Xử lý đổi trạng thái của chế độ PVE
             if (GameState.state == GameState.PLAYER1) {
                 player1.setPlaying(true);
@@ -150,10 +153,12 @@ public class PlayerManager extends JPanel {
             if (bot.isLost) player1.isVictory = true;
         }
     }
-    public Player getPlayer1(){
+
+    public Player getPlayer1() {
         return player1;
     }
-    public Player getPlayer2(){
+
+    public Player getPlayer2() {
         return player2;
     }
 

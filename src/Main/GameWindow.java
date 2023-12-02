@@ -31,4 +31,11 @@ public class GameWindow extends JFrame{
         jframe.setFocusable(true);
         jframe.requestFocus();
     }
+    public void setVisible(boolean visible){
+        jframe.setVisible(visible);
+    }
+
+    public Component getJframe() {
+        return jframe;
+    }
 }

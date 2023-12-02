@@ -1,19 +1,20 @@
 package Main;
 import Entities.PlayerManager;
 import GameState.GameMode;
+import GameState.Menu;
 
 import java.awt.*;
 
 public class Game implements Runnable{
     private final int FPS = 6;
     private final int UPS = 200;
-    private PlayerManager playerManager = new PlayerManager(this);
+    private PlayerManager playerManager;
+    private Thread gameThread;
     public Game(){
-        startGameLoop();
+        Menu menu = new Menu(this);
     }
-    public void startGameLoop(){
-        Thread gameThread = new Thread(this);
-        gameThread.start();
+    public void initPlayerManager(){
+        this.playerManager = new PlayerManager(this);
     }
     public void update(){
         playerManager.update();
@@ -41,7 +42,7 @@ public class Game implements Runnable{
                     playerManager.getPlayer1().repaint();
                     playerManager.getPlayer2().repaint();
                 }
-                else{
+                else if (GameMode.gameMode == GameMode.PVE){
                     playerManager.getPlayer1().repaint();
                     playerManager.getBot().repaint();
                 }
@@ -54,6 +55,15 @@ public class Game implements Runnable{
                 frames = 0;
                 updates = 0;
             }
+
         }
+    }
+
+    public Thread getGameThread() {
+        return gameThread;
+    }
+
+    public void setGameThread(Thread gameThread) {
+        this.gameThread = gameThread;
     }
 }

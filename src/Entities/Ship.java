@@ -3,6 +3,7 @@
     import Automatics.Bot;
     import GameState.GameMode;
 
+    import javax.swing.*;
     import java.awt.*;
     import java.awt.image.BufferedImage;
 
@@ -94,17 +95,20 @@
 
 
             public void attack(int x, int y) {
-                if (HP < 0){
-                    System.out.println("Nổ rồi đừng bắn nữa");
+                if (HP <= 0){
+                    JOptionPane.showMessageDialog(player.gameWindow.getJframe(), "Tàu đã nổ.");
+                    Bot.isExploded = true;
                     Player.changeTurn = true;
                     return;
                 }
-                if (player.isBroken[x][y]) Player.changeTurn = true;
+                if (player.isBroken[x][y]) {
+                    Player.changeTurn = true;
+                    JOptionPane.showMessageDialog(player.gameWindow.getJframe(), "Ô này đã bị bắn");
+                }
                 if (!player.isPlaced[x][y] || player.isExploded[x][y] || player.isBroken[x][y] || player.isFailedShot[x][y]) {
                     System.out.println("Bắn xịt");
                 } else {
                     Player.changeTurn = true;
-                    System.out.println("T đang bắn");
                     player.isBroken[x][y] = true;
                     HP--;
                     if (HP <= 0) {
