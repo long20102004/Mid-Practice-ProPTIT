@@ -31,7 +31,7 @@ public class Utility {
     public static final String smokeAni = "Animation/smoke.png";
     public static final String broken = "Animation/broken.png";
     public static final String turn = "Animation/turn.png";
-    public static final String victory = "Background/victory.png";
+    public static final String victory = "Background/victory.jpg";
     public static final String defeated = "Background/defeated.jpg";
     public static final String gameRules = "Background/GameRules.png";
     public static String getRandomBackGround(){

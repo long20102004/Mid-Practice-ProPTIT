@@ -21,8 +21,8 @@ public class PlayerManager extends JPanel {
     private PlayerState playerState;
     private Player currentPlayer;
     private Game game;
-    private boolean switchStatus;
-    private static int countNumberPlayer;
+    private boolean switchStatus; // Kiểm tra đã xong việc đặt tàu chưa
+    private static int countNumberPlayer; // Đếm số người đã đặt tàu xong
     private AutoPlace autoPlace;
 
 
@@ -77,9 +77,9 @@ public class PlayerManager extends JPanel {
     }
 
 
-    public void updatePlayerState() {
+    public void updatePlayerState() { // Cập nhật trạng thái chuyển lượt.
         if (GameMode.gameMode == GameMode.PVP) {
-            if (!isSwitchStatus()) {
+            if (!isSwitchStatus()) { // Xử lý chuyển lượt giữa trạng thái trước và sau khi đặt tàu
                 if (GameState.state == GameState.PLAYER1) {
                     GameState.state = GameState.PLAYER2;
                     playerState.currentPlayer = player2;
@@ -97,7 +97,6 @@ public class PlayerManager extends JPanel {
                 }
             }
         } else if (GameMode.gameMode == GameMode.PVE) {
-            // Xử lý đổi trạng thái của chế độ PVE
             if (!isSwitchStatus()) {
                 if (GameState.state == GameState.PLAYER1) {
                     GameState.state = GameState.BOT;
@@ -118,7 +117,7 @@ public class PlayerManager extends JPanel {
         }
     }
 
-    public void update() {
+    public void update() { // Cập nhật theo thời gian để repaint lại
         if (GameMode.gameMode == GameMode.PVP) {
             player1.setIsActive(true);
             player2.setIsActive(true);

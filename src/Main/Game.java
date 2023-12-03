@@ -4,8 +4,8 @@ import GameState.GameMode;
 import GameState.Menu;
 
 public class Game implements Runnable{
-    private final int FPS = 6;
-    private final int UPS = 200;
+    private final int FPS = 12;
+    private final int UPS = 2000;
     private PlayerManager playerManager;
     private Thread gameThread;
     public Game(){

@@ -11,6 +11,8 @@ public class AutoPlace {
     private final Random rnd = new Random();
 
 
+    // Tự động đặt thuyền cho PLAYER1,2 và BOT
+
     public AutoPlace(PlayerManager playerManager){
         this.playerManager = playerManager;
     }

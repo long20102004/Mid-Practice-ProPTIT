@@ -7,10 +7,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class GameRules extends JFrame {
-    BufferedImage img;
+    BufferedImage img;  // Luật chơi
     public GameRules(){
         img = Utility.importImg(Utility.gameRules);
-        this.setLocationRelativeTo(null);
+        setLocation(600,0);
 //        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setName("Luật chơi");
 //        Image scaledImage = img.getScaledInstance(600,800, Image.SCALE_SMOOTH);

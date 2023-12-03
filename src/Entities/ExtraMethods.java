@@ -29,7 +29,7 @@ public class ExtraMethods {
         brokenFrame = Utility.importImg(Utility.broken);
     }
 
-    public void importFire() {
+    public void importFire() {  // Đọc và tách hiệu ứng ngọn lửa
         BufferedImage img = Utility.importImg(Utility.burnLeft);
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
@@ -38,11 +38,20 @@ public class ExtraMethods {
         }
     }
 
-    public void importExplodeAnimation() {
+    public void importExplodeAnimation() {  // Đọc và tách hiệu ứng nổ
         BufferedImage img = Utility.importImg(Utility.explodeAni);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 explodeFrame[i][j] = img.getSubimage(j * EXPLODE_SIZE, i * EXPLODE_SIZE, EXPLODE_SIZE, EXPLODE_SIZE);
+            }
+        }
+    }
+
+    public void importSmoke() { // Đọc và tách hiệu ứng khói
+        BufferedImage img = Utility.importImg(Utility.smokeAni);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                smokeFrame[i][j] = img.getSubimage(j * 250, i * 170, 250, 170);
             }
         }
     }
@@ -52,7 +61,7 @@ public class ExtraMethods {
     public void importVictoryScreen() {
         victoryScreen = Utility.importImg(Utility.victory);
     }
-    public void drawExplode(Graphics g, int i, int j) {
+    public void drawExplode(Graphics g, int i, int j) { // Vẽ hiệu ứng nổ
         if (!explodedAnimation[i][j] && player.isExploded[i][j]) {
             if (xDrawPos < 9 && yDrawPos < 9) {
                 drawExplodeAnimation(g, j, i, xDrawPos, yDrawPos);
@@ -67,18 +76,17 @@ public class ExtraMethods {
             }
         }
     }
-
-
-
-    public void drawExplodeAnimation(Graphics g, int xPos, int yPos, int i, int j) { // Vẽ nổ
-        g.drawImage(explodeFrame[i][j], yPos * SQUARE_WIDTH, xPos * SQUARE_HEIGHT, EXPLODE_SIZE / 2, EXPLODE_SIZE / 2, null);
+    public void drawExplodeAnimation(Graphics g, int xPos, int yPos, int i, int j) {
+        g.drawImage(explodeFrame[i][j], yPos * SQUARE_WIDTH, xPos * SQUARE_HEIGHT, EXPLODE_SIZE * 10 / (2 * NUMBER_OF_SQUARE), EXPLODE_SIZE * 10 / (2 * NUMBER_OF_SQUARE), null);
     }
 
 
-    public void drawFire(Graphics g, int xPos, int yPos) {
+
+
+    public void drawFire(Graphics g, int xPos, int yPos) { // Vẽ hiệu ứng cháy
         if (explodedAnimation[xPos][yPos]) {
             if (xFire < 4 && yFire < 2) {
-                g.drawImage(fire[xFire][yFire], xPos * SQUARE_HEIGHT + 13, yPos * SQUARE_WIDTH + 6, 27, 48, null); // Chưa xử lý được số liệu theo các hằng số
+                g.drawImage(fire[xFire][yFire], xPos * SQUARE_HEIGHT + SQUARE_HEIGHT / 4, yPos * SQUARE_WIDTH + SQUARE_WIDTH / 10, SQUARE_WIDTH / 2, SQUARE_HEIGHT - SQUARE_HEIGHT / 9, null); // Chưa xử lý được số liệu theo các hằng số
             }
             xFire++;
             if (xFire >= 4) {
@@ -93,17 +101,10 @@ public class ExtraMethods {
     }
 
     // Hiệu ứng khói khi bắn xịt
-    public void importSmoke() {
-        BufferedImage img = Utility.importImg(Utility.smokeAni);
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                smokeFrame[i][j] = img.getSubimage(j * 250, i * 170, 250, 170);
-            }
-        }
-    }
 
 
-    public void drawSmoke(Graphics g, int i, int j) {
+
+    public void drawSmoke(Graphics g, int i, int j) { // Vẽ hiệu ứng khói
         if (player.isFailedShot[i][j]) {
             if (xSmoke < 3 && ySmoke < 3) {
                 g.drawImage(smokeFrame[xSmoke][ySmoke], i * SQUARE_HEIGHT, j * SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_HEIGHT * 170 / 250, null);
@@ -119,13 +120,13 @@ public class ExtraMethods {
             }
         }
     }
-    public void drawChangeTurnBackground(Graphics g){
+    public void drawChangeTurnBackground(Graphics g){ // Vẽ hiệu ứng chờ lượt trong khi đặt thuyền
         BufferedImage img = Utility.importImg(Utility.waitingBackground);
         g.drawImage(img, 0,0, NUMBER_OF_SQUARE * SQUARE_WIDTH, NUMBER_OF_SQUARE * SQUARE_HEIGHT , null);
     }
 
 
-    public void drawCorrectShot(Graphics g, int xPos, int yPos){
+    public void drawCorrectShot(Graphics g, int xPos, int yPos){ // Vẽ hiệu ứng vỡ khi bắn trúng
         if (player.isBroken[xPos][yPos]) g.drawImage(brokenFrame, xPos * SQUARE_WIDTH, yPos*SQUARE_HEIGHT, SQUARE_WIDTH,SQUARE_HEIGHT, null);
 
     }

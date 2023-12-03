@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JFrame {
+    // Chọn chế độ cho game
     private JButton PVPButton;
     private JButton PVEButton;
     private JButton gameRulesButton;

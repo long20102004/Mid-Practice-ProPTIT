@@ -15,12 +15,12 @@ public class GameWindow extends JFrame{
     public GameWindow(Player player, String name, KeyInputs keyInputs){
         jframe = new JFrame();
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.setLocationRelativeTo(null);
         jframe.setTitle(name);
         setWindowSize();
         jframe.add(player);
         if (keyInputs != null) jframe.addKeyListener(keyInputs);
         jframe.pack();
+        jframe.setLocationRelativeTo(null);
         jframe.setVisible(true);
     }
     public void setWindowSize(){

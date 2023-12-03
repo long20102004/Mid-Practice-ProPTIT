@@ -15,17 +15,17 @@ public class Player extends JComponent {
     public ShipManager shipManager;
     protected ExtraMethods extraMethods = new ExtraMethods(this);
     public boolean isPlaying = true;
-    public boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem vị trí đã bị bắn hỏng hay chưa
-    public boolean[][] isBroken = new boolean[100][100];
-    public boolean[][] isFailedShot = new boolean[100][100];
-    public boolean[][] isDrawed = new boolean[100][100];
-    public boolean[][] isPlaced = new boolean[100][100];
-    public int numberExplodedShip;
-    public static boolean changeTurn;
-    public boolean isLost;
-    public boolean isVictory;
-    protected boolean isActive;
-    public boolean isAuto;
+    public boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem bị bắn nổ
+    public boolean[][] isBroken = new boolean[100][100]; // Kiểm tra xem bị bắn vỡ
+    public boolean[][] isFailedShot = new boolean[100][100]; // Kiểm tra bị bắn xịt
+    public boolean[][] isDrawed = new boolean[100][100]; // Kiểm tra đã vẽ tàu
+    public boolean[][] isPlaced = new boolean[100][100]; // Kiểm tra đã đặt tàu
+    public int numberExplodedShip; // Đếm số tàu đã nổ
+    public static boolean changeTurn; // Kiểm tra đổi lượt
+    public boolean isLost; // Kiểm tra thua
+    public boolean isVictory; // Kiểm tra thắng
+    protected boolean isActive; // Kiểm tra có đang chơi (Phân biệt PVP và PVE)
+    public boolean isAuto; // Kiểm tra có tự động đặt tàu không (Để xử lý hiệu ứng)
 
     public Player(PlayerManager playerManager) {
         this.setPlayerManager(playerManager);

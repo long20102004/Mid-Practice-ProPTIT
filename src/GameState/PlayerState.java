@@ -40,11 +40,11 @@ public class PlayerState implements StateMethods {
             getCurrentPlayer().getShipManager().addShip(getCurrentPlayer().getTypeShip(), xPos, yPos, getCurrentPlayer().isHorizontal());
         } else if (e.getButton() == MouseEvent.BUTTON1) {
             if (GameMode.gameMode == GameMode.PVE && currentPlayer == playerManager.getBot()) {
-                currentPlayer.shipManager.attackShip(xPos, yPos);
+                currentPlayer.shipManager.attackShip(xPos, yPos, true);
                 if (!currentPlayer.isBroken[xPos][yPos]) playerManager.getBot().autoAttack();
             }
             if (GameMode.gameMode == GameMode.PVP) {
-                currentPlayer.shipManager.attackShip(xPos, yPos);
+                currentPlayer.shipManager.attackShip(xPos, yPos, true);
             }
         }
     }

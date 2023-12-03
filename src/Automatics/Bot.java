@@ -13,9 +13,7 @@ import static utilz.ConstantVariable.*;
 public class Bot extends Player {
     private PlayerManager playerManager;
     private final Random rnd = new Random();
-    private boolean isPotential;
-    public static boolean isExploded;
-    public int lastXIndex, lastYIndex, x, y;
+    public int x, y;
     public boolean[][] indexAttacked = new boolean[100][100];
 
     public Bot(PlayerManager playerManager) {
@@ -25,48 +23,40 @@ public class Bot extends Player {
         y = rnd.nextInt(0, NUMBER_OF_SQUARE);
     }
 
-    public boolean isIndexValid(int xPos, int yPos) {
-        if (xPos <= IMAGE_WIDTH && yPos <= IMAGE_HEIGHT && xPos >= 0 && yPos >= 0) return true;
-        return false;
-    }
+    // Chế độ tự bắn cho bot
 
     public void autoAttack() {
-        boolean isHit = playerManager.getPlayer1().shipManager.attackShip(x, y);
+        boolean isHit = playerManager.getPlayer1().shipManager.attackShip(x, y, false);
         if (isHit){
-            isPotential = true;
-            lastXIndex = x;
-            lastYIndex = y;
-        }
-        if (isHit == false && isPotential){
-            x = lastXIndex;
-            y = lastYIndex;
+            indexAttacked[x][y] = true;
         }
         else{
-            x = rnd.nextInt(0, NUMBER_OF_SQUARE);
-            y = rnd.nextInt(0, NUMBER_OF_SQUARE);
+            x = rnd.nextInt(0,NUMBER_OF_SQUARE);
+            y = rnd.nextInt(0,NUMBER_OF_SQUARE);
             while (indexAttacked[x][y]) {
-                x = rnd.nextInt(0, NUMBER_OF_SQUARE);
-                y = rnd.nextInt(0, NUMBER_OF_SQUARE);
+                x = rnd.nextInt(0,NUMBER_OF_SQUARE);
+                y = rnd.nextInt(0,NUMBER_OF_SQUARE);
             }
         }
         while (isHit) {
             if (isIndexValid(x, y + 1)) {
                 y++;
             }
-            else if (isIndexValid(x, y- 1)){
+            else if (isIndexValid(x, y - 1)){
                 y--;
-            } else if (isIndexValid(x+1,y)) {
+            } else if (isIndexValid(x+1, y)) {
                 x++;
             }
             else x--;
-            isHit = playerManager.getPlayer1().shipManager.attackShip(x,y);
-            indexAttacked[x][y] = true;
+            isHit = playerManager.getPlayer1().shipManager.attackShip(x,y, false);
         }
     }
 
-    public void setPotential(boolean potential){
-        this.isPotential = potential;
+    public boolean isIndexValid(int xPos, int yPos) {
+        if (xPos <= NUMBER_OF_SQUARE && yPos <= NUMBER_OF_SQUARE && xPos >= 0 && yPos >= 0) return true;
+        return false;
     }
+
 
     @Override
     public void render(Graphics g) {
