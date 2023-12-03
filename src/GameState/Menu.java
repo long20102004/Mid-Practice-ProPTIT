@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 public class Menu extends JFrame {
     private JButton PVPButton;
     private JButton PVEButton;
+    private JButton gameRulesButton;
     private Game game;
     public Menu(Game game){
         this.game = game;
@@ -19,6 +20,7 @@ public class Menu extends JFrame {
 
         PVPButton = new JButton("PVP");
         PVEButton = new JButton("PVE");
+        gameRulesButton = new JButton("LUẬT CHƠI");
 
         PVPButton.addActionListener(new ActionListener() {
             @Override
@@ -44,9 +46,17 @@ public class Menu extends JFrame {
             }
         });
 
-        setLayout(new GridLayout(2,1));
+        gameRulesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GameRules();
+            }
+        });
+
+        setLayout(new GridLayout(3,1));
         add(PVPButton);
         add(PVEButton);
+        add(gameRulesButton);
         setVisible(true);
     }
 

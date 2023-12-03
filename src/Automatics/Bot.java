@@ -16,6 +16,7 @@ public class Bot extends Player {
     private boolean isPotential;
     public static boolean isExploded;
     public int lastXIndex, lastYIndex, x, y;
+    public boolean[][] indexAttacked = new boolean[100][100];
 
     public Bot(PlayerManager playerManager) {
         super(playerManager);
@@ -43,6 +44,10 @@ public class Bot extends Player {
         else{
             x = rnd.nextInt(0, NUMBER_OF_SQUARE);
             y = rnd.nextInt(0, NUMBER_OF_SQUARE);
+            while (indexAttacked[x][y]) {
+                x = rnd.nextInt(0, NUMBER_OF_SQUARE);
+                y = rnd.nextInt(0, NUMBER_OF_SQUARE);
+            }
         }
         while (isHit) {
             if (isIndexValid(x, y + 1)) {
@@ -55,6 +60,7 @@ public class Bot extends Player {
             }
             else x--;
             isHit = playerManager.getPlayer1().shipManager.attackShip(x,y);
+            indexAttacked[x][y] = true;
         }
     }
 
