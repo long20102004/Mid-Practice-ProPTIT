@@ -1,5 +1,6 @@
 package GameState;
 import Main.Game;
+import Settings.SizeMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,17 +11,19 @@ public class Menu extends JFrame {
     private JButton PVPButton;
     private JButton PVEButton;
     private JButton gameRulesButton;
+    private JButton settingButton;
     private Game game;
     public Menu(Game game){
         this.game = game;
         setTitle("MENU");
-        setSize(300,200);
+        setSize(500,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         PVPButton = new JButton("PVP");
         PVEButton = new JButton("PVE");
         gameRulesButton = new JButton("LUẬT CHƠI");
+        settingButton = new JButton("CÀI ĐẶT");
 
         PVPButton.addActionListener(new ActionListener() {
             @Override
@@ -53,10 +56,18 @@ public class Menu extends JFrame {
             }
         });
 
-        setLayout(new GridLayout(3,1));
+        settingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SizeMap();
+            }
+        });
+
+        setLayout(new GridLayout(2,2));
         add(PVPButton);
         add(PVEButton);
         add(gameRulesButton);
+        add(settingButton);
         setVisible(true);
     }
 

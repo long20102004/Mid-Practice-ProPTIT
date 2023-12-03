@@ -110,10 +110,6 @@ public class PlayerState implements StateMethods {
 
     @Override
     public void keyReleased(KeyEvent e) {
-//        switch (e.getKeyCode()){
-//            case KeyEvent.VK_ENTER:
-//                playerManager.readyToSwap = false;
-//        }
     }
 
     public Player getCurrentPlayer() {

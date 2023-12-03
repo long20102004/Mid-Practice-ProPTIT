@@ -3,8 +3,6 @@ import Entities.PlayerManager;
 import GameState.GameMode;
 import GameState.Menu;
 
-import java.awt.*;
-
 public class Game implements Runnable{
     private final int FPS = 6;
     private final int UPS = 200;
