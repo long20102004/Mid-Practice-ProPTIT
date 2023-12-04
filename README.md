@@ -12,7 +12,7 @@ The project was done by [Hoàng Hải Long]((https://github.com/long20102004)), 
 
 ## Software Design (UML)
 
-- ![UML1 drawio](https://github.com/long20102004/Mid-Practice-ProPTIT/assets/99398806/5cb3d175-f614-4a15-856a-1b5f0b2b103f)
+![UML1 drawio](https://github.com/long20102004/Mid-Practice-ProPTIT/assets/99398806/5cb3d175-f614-4a15-856a-1b5f0b2b103f)
 
 
 ## Demo Video
