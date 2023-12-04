@@ -1,6 +1,6 @@
 # Sea Battle
 
-Sea Battle is a game for two players. The game is played on four grids, two for each player. The grids are typically square – usually 10×10 – and the individual squares in the grid are identified by letter and number. On one grid the player arranges ships and records the shots by the opponent. On the other grid the player records their own shots.
+Sea Battle is a game for two players. The game is played on two grids, one for each player. The grids are typically square – usually 10×10. In first turn, player place their battleship then the opponent does. Then in each turn, player can choose a square on their opponent grid then attack it. In a turn, players do not see where their opponent's ships are placed.
 
 The project was done by [Hoàng Hải Long]((https://github.com/long20102004)), in the course of Object Oriented Programming at [ProPTIT](https://proptit.com/).
 
@@ -24,7 +24,6 @@ The project was done by [Hoàng Hải Long]((https://github.com/long20102004)), 
 - ![image](https://github.com/long20102004/Mid-Practice-ProPTIT/assets/99398806/f5d25c0c-4d18-4230-96d6-85317cd6c059)
 - ![image](https://github.com/long20102004/Mid-Practice-ProPTIT/assets/99398806/da75bfdc-3c3e-40bb-bf2f-1fd1a72813ef)
 - ![image](https://github.com/long20102004/Mid-Practice-ProPTIT/assets/99398806/fbb5d70b-a6d5-452a-888b-b8a30520e0e3)
-
 
 
 
